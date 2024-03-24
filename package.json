@@ -1,0 +1,31 @@
+{
+  "name": "frontend-ip",
+  "version": "1.0.0",
+  "description": "This is the frontend part for the IP project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint",
+    "prepare": "husky"
+  },
+  "husky": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eu-Open-Data/Frontend.git"
+  },
+  "author": "2B2-2024",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Eu-Open-Data/Frontend/issues"
+  },
+  "homepage": "https://github.com/Eu-Open-Data/Frontend#readme",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.34.1",
+    "husky": "^9.0.11"
+  }
+}
