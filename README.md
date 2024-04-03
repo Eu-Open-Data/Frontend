@@ -2,6 +2,20 @@
 
 This repository contains the client application for the IP project.
 
+## Workflow (branches)
+
+```
+                        task1             task2
+                        _____             _____
+                      /       \         /       \
+main        _________/_________\_______/_________\_______  ______ main
+                                                          \
+release-1   _______________________________________________\_____ release-1
+```
+
+- main : every build is incremented with patch + 1 and deployed to staging environment.
+- release-1 : every build is incremented with minor + 1 and deployed to production environment. This operation will be done manually and the end of every sprint.
+
 ## Local Setup
 
 1. Clone the remote repo locally so you can start the development process. 
