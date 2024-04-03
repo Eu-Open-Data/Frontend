@@ -23,11 +23,18 @@ jobs:
       - name: Build project
         run: npm run build
       
+      - name: Get the latest tag
+        id: latest-tag
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+
       - name: Create Release Tag
         id: create_tag
         uses: christian-draeger/increment-semantic-version@1.1.0
         with:
-            current-version: '1.0.0'
+            current-version: ${{ env.LATEST_TAG }}
             version-fragment: 'bug'
 
       - name: Create GitHub Release
