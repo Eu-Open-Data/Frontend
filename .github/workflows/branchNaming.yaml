@@ -6,6 +6,7 @@ on:
   pull_request:
     branches:
       - main
+    types: [opened, synchronize, reopened]
 
 jobs:
   branch-naming-policy:
@@ -18,4 +19,5 @@ jobs:
         if: github.ref_type == 'branch' || github.ref_type == 'pull_request'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          regex: '^CU-.{9}-[a-z0-9-]+$'
+          regex: '^CU-.{9}-.+$
+'
