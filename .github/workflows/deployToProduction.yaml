@@ -33,7 +33,7 @@ jobs:
           folder: ''
           bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
-          delete-removed: true
+          delete-removed: false
           no-cache: true
-          private: true
+          private: false
           files-to-include: '{./dist/**}'
