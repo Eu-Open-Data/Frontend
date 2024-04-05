@@ -1,1 +1,3 @@
+npm run build
 npm run lint
+npx --no-install commitlint --edit "$1"
