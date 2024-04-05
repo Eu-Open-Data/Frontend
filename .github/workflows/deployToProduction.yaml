@@ -30,10 +30,10 @@ jobs:
       - name: Deploy 
         uses: reggionick/s3-deploy@v4
         with:
-          folder: ''
+          folder: 'dist'
           bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
           delete-removed: false
           no-cache: true
           private: false
-          files-to-include: '{./dist/**}'
+          files-to-include: '{./**}'
