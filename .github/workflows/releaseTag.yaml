@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - release-1
 
 jobs:
   create-release:
@@ -11,17 +12,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
       
       - name: Get the latest tag
         id: latest-tag
@@ -30,12 +20,20 @@ jobs:
           LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
           echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
+      - name: Set Version Fragment
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/release-1" ]]; then
+            echo "VERSION_FRAGMENT=feature" >> $GITHUB_ENV
+          else
+            echo "VERSION_FRAGMENT=bug" >> $GITHUB_ENV
+          fi
+
       - name: Create Release Tag
         id: create_tag
         uses: christian-draeger/increment-semantic-version@1.1.0
         with:
             current-version: ${{ env.LATEST_TAG }}
-            version-fragment: 'bug'
+            version-fragment: ${{ env.VERSION_FRAGMENT }}
 
       - name: Create GitHub Release
         id: create_release
