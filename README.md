@@ -1,4 +1,4 @@
-# Frontend IP - test
+# Frontend IP
 
 This repository contains the client application for the IP project.
 
