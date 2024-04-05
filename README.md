@@ -16,6 +16,10 @@ release-1   _______________________________________________\_____ release-1
 - main : every build is incremented with patch + 1 and deployed to staging environment.
 - release-1 : every build is incremented with minor + 1 and deployed to production environment. This operation will be done manually and the end of every sprint.
 
+### Commits
+- At the moment are 3 commits checks, for build, linting, and commit message correctitude.
+- Find more about commit messages [Here](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional).
+
 ## Local Setup
 
 1. Clone the remote repo locally so you can start the development process. 

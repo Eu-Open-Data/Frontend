@@ -2,7 +2,8 @@ name: Check if build is working
 
 on:
   pull_request:
-    branches: [main]
+    branches: 
+      - main
 
 jobs:
   run_build:
