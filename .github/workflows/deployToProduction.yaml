@@ -3,6 +3,7 @@ name: Create Production Deployment
 on:
   push:
     branches:
+      - main
       - release-1
 
 jobs:
@@ -11,6 +12,8 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID_AWS }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
+      S3_BUCKET: ${{ github.ref == 'refs/heads/main' && secrets.S3_BUCKET_STAGING || secrets.S3_BUCKET }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -31,7 +34,7 @@ jobs:
         uses: reggionick/s3-deploy@v4
         with:
           folder: dist
-          bucket: ${{ secrets.S3_BUCKET }}
+          bucket: ${{ env.S3_BUCKET }}
           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
           delete-removed: true
           no-cache: true

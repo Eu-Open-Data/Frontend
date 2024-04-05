@@ -2,6 +2,12 @@
 
 This repository contains the client application for the IP project.
 
+## Environments
+| Env   |      domain      |
+|----------|:-------------:|
+| staging  |  holidayadvisor.eu |
+| production | dev.holidayadvisor.eu |
+
 ## Workflow (branches)
 
 ```
