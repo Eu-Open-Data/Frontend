@@ -36,7 +36,7 @@ jobs:
       - name: Update version in index.html
         run: |
           VERSION=${{ env.LATEST_TAG }}
-          sed -i "s/<!--VERSION-->/Version: $VERSION/g" dist/index.html
+          sed -i "s/<!--VERSION-->/$VERSION/g" ./dist/index.html
 
       # https://github.com/marketplace/actions/s3-deploy
       - name: Deploy 
