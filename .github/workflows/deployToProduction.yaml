@@ -29,6 +29,11 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Update version in index.html
+        run: |
+          VERSION=${{ github.event.release.tag_name }}
+          sed -i "s/<!--VERSION-->/Version: $VERSION/g" index.html
+
       # https://github.com/marketplace/actions/s3-deploy
       - name: Deploy 
         uses: reggionick/s3-deploy@v4
