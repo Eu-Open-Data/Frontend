@@ -23,8 +23,12 @@ release-1   _______________________________________________\_____ release-1
 - release-1 : every build is incremented with minor + 1 and deployed to production environment. This operation will be done manually and the end of every sprint.
 
 ### Commits
-- At the moment are 3 commits checks, for build, linting, and commit message correctitude.
+- At the moment are 4 commits checks, for build, linting, unit-tests and commit message correctitude.
 - Find more about commit messages [Here](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional).
+
+## Pull Requests
+Pull Requests should have a proper naming respecting the tempalte
+`[CU-123456789] This is a PR`. Pay attention that the CU-123456789 represent the ticket id in clickup, so for the sake of tracking, write a correct id.
 
 ## Local Setup
 
