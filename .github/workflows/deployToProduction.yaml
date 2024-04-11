@@ -29,14 +29,10 @@ jobs:
       - name: Build project
         run: npm run build
       
-      - name: Get latest tag
-        id: latesttag
-        run: echo "LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
-
       - name: Update version in index.html
         run: |
-          VERSION=${{ env.LATEST_TAG }}
-          sed -i "s/<!--VERSION-->/$VERSION/g" ./dist/index.html
+          LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+          sed -i "s/VERSION/$LATEST_TAG/g" ./dist/index.html
 
       # https://github.com/marketplace/actions/s3-deploy
       - name: Deploy 
