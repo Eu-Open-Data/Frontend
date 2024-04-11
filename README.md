@@ -2,6 +2,12 @@
 
 This repository contains the client application for the IP project.
 
+## Environments
+| Env   |      domain      |
+|----------|:-------------:|
+| production  |  holidayadvisor.eu |
+| staging | dev.holidayadvisor.eu |
+
 ## Workflow (branches)
 
 ```
@@ -17,8 +23,15 @@ release-1   _______________________________________________\_____ release-1
 - release-1 : every build is incremented with minor + 1 and deployed to production environment. This operation will be done manually and the end of every sprint.
 
 ### Commits
-- At the moment are 3 commits checks, for build, linting, and commit message correctitude.
+- At the moment are 4 commits checks, for build, linting, unit-tests and commit message correctitude.
 - Find more about commit messages [Here](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional).
+
+### Branches
+- Should have in their name the ID of the clickup task so the tracking could be made. An exemple of such branch name is `CU-86by7ave2-FE1-003-Automatic-deployment-to-Cloud`. It has `CU-86by7ave2` which will be used for tracking of branch into clickup.
+
+## Pull Requests
+Pull Requests should have a proper naming respecting the tempalte
+`[CU-123456789] This is a PR`. Pay attention that the CU-123456789 represent the ticket id in clickup, so for the sake of tracking, write a correct id.
 
 ## Local Setup
 

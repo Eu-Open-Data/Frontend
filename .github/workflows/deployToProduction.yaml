@@ -1,9 +1,10 @@
 name: Create Production Deployment
 
 on:
-  push:
-    branches:
-      - release-1
+  workflow_run:
+    workflows: "Create Release"
+    types:
+      - completed
 
 jobs:
   create-release:
@@ -11,6 +12,8 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID_AWS }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
+      S3_BUCKET: ${{ github.ref == 'refs/heads/main' && secrets.S3_BUCKET_STAGING || secrets.S3_BUCKET }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -25,13 +28,19 @@ jobs:
 
       - name: Build project
         run: npm run build
+      
+      - name: Update version in index.html
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+          sed -i "s/VERSION/$LATEST_TAG/g" ./dist/index.html
 
       # https://github.com/marketplace/actions/s3-deploy
       - name: Deploy 
         uses: reggionick/s3-deploy@v4
         with:
           folder: dist
-          bucket: ${{ secrets.S3_BUCKET }}
+          bucket: ${{ env.S3_BUCKET }}
           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
           delete-removed: true
           no-cache: true
