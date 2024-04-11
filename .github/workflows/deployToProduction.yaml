@@ -12,7 +12,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID_AWS }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
-      S3_BUCKET: ${{ github.ref == 'refs/heads/main' && secrets.S3_BUCKET_STAGING || secrets.S3_BUCKET }}
+      S3_BUCKET: ${{ if eq(github.event.workflow_run.head_branch, 'main'), secrets.S3_BUCKET_STAGING, secrets.S3_BUCKET }}
 
     steps:
       - name: Check out code
