@@ -1,0 +1,48 @@
+.Sidebar {
+    height: 100%;
+    width: 87.73px;
+    background-color: #fff;
+    border-right: 2px solid grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* Distribuie elementele vertical */
+}
+
+.SidebarList {
+    padding: 0;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;  /* Ocupă tot spațiul disponibil */
+}
+
+.SidebarList .row {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.SidebarList .row:hover {
+    cursor: pointer;
+    background-color: grey;
+}
+
+.SidebarList #active {
+    background-color: rgb(213, 93, 93);
+}
+
+.row #icon {
+    flex: 50%;
+    display: grid;
+    place-items: center;
+}
+
+.SidebarList .exit {
+    margin-top: auto;  /* Împinge butonul Exit în partea de jos */
+}
