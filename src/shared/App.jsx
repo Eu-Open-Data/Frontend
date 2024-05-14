@@ -1,35 +1,24 @@
-import { useState } from "react";
-import reactLogo from "../assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+
+import "../pages/Authentication/PageSignUp/SignUp.css"
+import SignUp from "../pages/Authentication/PageSignUp/SignUp.jsx";
+import "../pages/Authentication/PageLogIn/LogIn.css"
+import LogIn from "../pages/Authentication/PageLogIn/LogIn.jsx";
+import "../pages/Authentication/PageForgotPassword/ForgotPassword.css"
+import ForgotPassword from "../pages/Authentication/PageForgotPassword/ForgotPassword.jsx";
+import "../pages/Authentication/PagePasswordReset/PasswordReset.css"
+import PasswordReset from "../pages/Authentication/PagePasswordReset/PasswordReset.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
+ 
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <div> Avion de la bogdan puternic doi trei patru scula bob</div>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+        <SignUp/> <br/>
+        <LogIn/>  <br/>
+        <ForgotPassword/>  <br/>
+        <PasswordReset/>  <br/>
+    </div>
+    
   );
 }
 
