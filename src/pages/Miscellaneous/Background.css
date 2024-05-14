@@ -1,0 +1,17 @@
+Background {
+  top: 0;
+  position: absolute;
+}
+.bg-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.bg-img {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  object-fit: cover;
+  width: 100%;
+  z-index: -9999;
+}
