@@ -1,8 +1,5 @@
 
-
 function PasswordReset(){
-
-   
 
     return(
             <div className="container-reset">
