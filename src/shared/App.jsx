@@ -1,9 +1,9 @@
-import { LandingPage } from "../pages/Homepage/LandingPage/LandingPage.jsx";
+import MapComponent from "../pages/Map/MapComponent.jsx";
 import "./App.css";
 function App() {
   return (
     <div>
-      <LandingPage />
+      <MapComponent />
     </div>
   );
 }
