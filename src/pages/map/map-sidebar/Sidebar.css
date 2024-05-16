@@ -1,0 +1,121 @@
+.Sidebar {
+    height: 100%;
+    width: 87.73px;
+    background-color: #fff;
+    border-right: 1px solid #CCC;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.SidebarList {
+    padding: 0;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    
+}
+
+.SidebarList .row {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.SidebarList .row:hover {
+    cursor: pointer;
+    background-color: grey;
+}
+
+.SidebarList #active {
+    background-color: rgb(55, 91, 163);
+}
+
+.row #icon {
+    flex: 50%;
+    display: grid;
+    place-items: center;
+}
+
+.SidebarList .exit {
+    margin-top: auto;
+}
+
+.unpackButton, .repackButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ccc; /* Gri */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 5px; /* Mai mic */
+    border-radius: 4px;
+    font-size: 10px; /* Ajustare font */
+    width: 16px; /* Lățime fixă pentru a fi pătrat */
+    height: 64px; /* Înălțime fixă pentru a fi pătrat */
+    text-align: center;
+    line-height: 14px; /* Centrare verticală a textului */
+    border: 1px solid grey; /* Blue border */
+
+
+    
+}
+
+.unpackButton {
+    left: 90%;
+}
+
+.repackButton {
+    right: -9px;  /* Poziționare pentru a centra butonul pe marginea dreaptă */
+}
+
+.filtersSection {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 200px;
+    height: 100%;
+    background-color: #f0f0f0;
+    /*border-left: 1px solid #ccc;*/
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #ccc;
+
+}
+
+.filterContent {
+    flex-grow: 1;
+}
+
+.filtersSection {
+    position: absolute;
+    top: 0;
+    left: 100%; /* Overlap the main sidebar initially */
+    width: 250px; /* Adjust width as needed */
+    height: 100%;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out; /* Smooth transition on open/close */
+  }
+  
+  .filtersSection.open { /* Add a class for open state */
+    transform: translateX(-100%); /* Slide filters section into view */
+  }
+  
+  .filterContent {
+    flex-grow: 1; /* Allow remaining space to be filled by filter content */
+  }
+  
