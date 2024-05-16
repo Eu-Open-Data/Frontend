@@ -1,10 +1,11 @@
+
 import "./App.css";
-import Sidebar from "../pages/map/map-sidebar/Sidebar";
+import { LandingPage } from "../pages/Homepage/LandingPage/LandingPage.jsx";
 
 function App() {
   return (
-    <div className="App">
-      <Sidebar />
+      <div className="App">
+      <LandingPage />
     </div>
   );
 }
