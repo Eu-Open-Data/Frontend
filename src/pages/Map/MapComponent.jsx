@@ -38,7 +38,7 @@ function Map() {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ marginBottom: '10px' }}>
         <input
-          type="text"
+          type="text" 
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
