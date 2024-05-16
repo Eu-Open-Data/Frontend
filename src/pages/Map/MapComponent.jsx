@@ -3,7 +3,7 @@ import axios from 'axios';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const mapStyles = {
-  height: "80vh",
+  height: "82vh",
   width: "100%"
 };
 
