@@ -6,6 +6,7 @@ export const LandingPage = () => {
   //const bg = "../../../assets/landingbg.jpg";
   return (
     <>
+      
       <Background url={landingBg} />{" "}
       <div className="temporary-wrapper">
         <p className="landing-page-title">Discover Europe</p>
