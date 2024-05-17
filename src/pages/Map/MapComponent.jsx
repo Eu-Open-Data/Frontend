@@ -3,7 +3,7 @@ import axios from "axios";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import "./Map.css";
 import { ContentWrapper } from "../Miscellaneous/ContentWrapper";
-import Sidebar from "../Map/map-sidebar/Sidebar.jsx";
+
 const mapStyles = {
   height: "82vh",
   width: "100%",
@@ -40,7 +40,6 @@ function Map() {
 
   return (
     <>
-      <Sidebar />
       <ContentWrapper type="vertical">
         <div
           style={{
