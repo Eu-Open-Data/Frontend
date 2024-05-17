@@ -1,12 +1,6 @@
 import "./App.css";
-import MapPage from "../pages/Map/MapPage.jsx";
 
 function App() {
-  return (
-      <div className="App">
-        <MapPage />
-      </div>
-  );
+  return <div className="App"></div>;
 }
-
 export default App;
