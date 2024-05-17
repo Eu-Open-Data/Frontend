@@ -2,11 +2,12 @@
     height: 100%;
     width: 87.73px;
     background-color: #fff;
-    border-right: 1px solid #CCC;
+    border-right: 1px solid #BFBFBF;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
 }
 
 .SidebarList {
@@ -17,7 +18,6 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    
 }
 
 .SidebarList .row {
@@ -32,11 +32,11 @@
 
 .SidebarList .row:hover {
     cursor: pointer;
-    background-color: grey;
+    background-color: rgb(240, 240, 240);
 }
 
 .SidebarList #active {
-    background-color: rgb(55, 91, 163);
+    border-right: 2px solid #5CC1F9;
 }
 
 .row #icon {
@@ -53,9 +53,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #ccc; /* Gri */
-    color: #fff;
-    border: none;
+    background-color: #F5F5F5;
+    color: #BFBFBF;
     cursor: pointer;
     padding: 5px; /* Mai mic */
     border-radius: 4px;
@@ -64,10 +63,7 @@
     height: 64px; /* Înălțime fixă pentru a fi pătrat */
     text-align: center;
     line-height: 14px; /* Centrare verticală a textului */
-    border: 1px solid grey; /* Blue border */
-
-
-    
+    border: 1px solid #BFBFBF;
 }
 
 .unpackButton {
@@ -82,15 +78,13 @@
     position: absolute;
     top: 0;
     left: 100%;
-    width: 200px;
     height: 100%;
-    background-color: #f0f0f0;
-    /*border-left: 1px solid #ccc;*/
-    padding: 10px;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #ccc;
-
+    border-right: 1px solid #BFBFBF;
+    transform: translateX(1px);
+    box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
 }
 
 .filterContent {
@@ -101,13 +95,6 @@
     position: absolute;
     top: 0;
     left: 100%; /* Overlap the main sidebar initially */
-    width: 250px; /* Adjust width as needed */
-    height: 100%;
-    background-color: #fff;
-    border-left: 1px solid #ccc;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
     transition: transform 0.3s ease-in-out; /* Smooth transition on open/close */
   }
   

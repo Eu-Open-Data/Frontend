@@ -1,24 +1,23 @@
 .filter-sidebar {
     background-color: white;
     /*box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);*/ 
-    width: 210px;
-    max-height: 100vh;
-    overflow-y: auto;
-    padding: 20px;
+    width: 384px;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    
+    box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
   }
   
   .filters-container {
     flex: 1; /* Take up remaining space */
+    padding: 32px;
   }
   
   h2 {
-    font-size: 1.2rem;
+    font-size: 30px;
     margin-bottom: 30px;
     text-align: center;
-    color: #0081c9; /* Blue text */
+    color: #0281C8; /* Blue text */
   }
   
   .dropdown-container,
@@ -37,7 +36,7 @@
   .dropdown-container label,
   .input-container label,
   .toggle-container label {
-    color: #0081c9; /* Blue text */
+    color: #0281C8; /* Blue text */
   }
   
   .toggle-container {
@@ -56,18 +55,19 @@
   }
   
   .search-button {
-    background-color: #e8f0fe;
+    background-color: #0281C8;
     color: #fff;
-    border: 1px solid #0081c9; /* Blue border */
-    border-radius: 10px;
+    border: 1px solid #0281C8; /* Blue border */
+    border-radius: 99px;
     cursor: pointer;
     padding: 10px 20px;
-    margin-top: auto; /* Push to bottom */
+    /* Push to bottom */
+    margin: auto 32px 32px;
     transition: background-color 0.3s ease;
   }
   
   .search-button:hover {
-    background-color: #0081c9;
+    background-color: #0281C8;
     color: #fff; /* White text on hover */
   }
   
@@ -80,12 +80,12 @@
   .input-container > div input[type="checkbox"] {
     outline: none;
     padding: 5px;
-    border: 1px solid #0081c9; /* Blue border */
+    border: 1px solid #0281C8; /* Blue border */
     border-radius: 3px;
   }
   
   .dropdown-container select {
-    border: 1px solid #0081c9; /* Blue border */
+    border: 1px solid #0281C8; /* Blue border */
     border-radius: 3px;
     padding: 5px;
   }
@@ -105,12 +105,12 @@
     height: 16px; /* Set checkbox height */
     border-radius: 50%; /* Set border-radius for round checkbox */
     background-color: #fff; /* White background for checkbox */
-    border: 1px solid #0081c9; /* Blue border for checkbox */
+    border: 1px solid #0281C8; /* Blue border for checkbox */
     transition: background-color 0.3s ease;
   }
   
   .toggle-container input[type="checkbox"]:checked {
-    background-color: #0081c9; /* Blue background for checked checkbox */
+    background-color: #0281C8; /* Blue background for checked checkbox */
     border: 1px solid white;
   }
   
@@ -118,8 +118,8 @@
     position: absolute; /* Setăm poziția absolută pentru a putea ocupa întreaga secțiune a filters-container */
     top: 0;
     left: 0;
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,7 +135,32 @@
     animation: spin 1s linear infinite;
     margin: 20px auto;
   }
-  
+
+  .dropdown
+  {
+    width: 256px;
+    border-radius: 99px !important;
+    text-align: center;
+    color: #1B75B3;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .listItem
+  {
+    padding: 8px 16px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    background-color: #ffffff;
+  }
+
+  .listItem:hover
+  {
+    background-color: #f0f0f0;
+  }
+
+
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

@@ -14,7 +14,8 @@ function Sidebar() {
   return (
     <div className="Sidebar">
       <ul className="SidebarList">
-        {SidebarData.map((val, key) => (
+        {
+            SidebarData.map((val, key) => (
           <li
             key={key}
             className={`row ${val.className ? val.className : ""}`}
@@ -34,12 +35,9 @@ function Sidebar() {
         </button>
       )}
       {showFilters && (
-        <div className="filtersSection">
-          <button className="repackButton" onClick={toggleFilters}>
-            &lt;
-          </button>
-          <FilterSidebar />
-        </div>
+          <div className="filtersSection">
+              <FilterSidebar/>
+          </div>
       )}
     </div>
   );

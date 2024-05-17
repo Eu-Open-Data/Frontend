@@ -1,0 +1,13 @@
+.page {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 384px;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #BFBFBF;
+    transform: translateX(1px);
+    box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
+}

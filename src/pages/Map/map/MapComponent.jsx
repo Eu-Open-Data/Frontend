@@ -3,7 +3,7 @@ import axios from 'axios';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const mapStyles = {
-  height: "82vh",
+  height: "100%",
   width: "100%"
 };
 
@@ -13,7 +13,7 @@ const defaultCenter = {
 };
 
 function Map() {
-  const [searchText, setSearchText] = useState('');
+  const [searchText] = useState('');
   const [locations, setLocations] = useState([]);
   const [mapCenter, setMapCenter] = useState(defaultCenter);
   const [zoom, setZoom] = useState(10);
@@ -34,21 +34,15 @@ function Map() {
     }
   };
 
+  console.log(searchLocation);
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ marginBottom: '10px' }}>
-        <input
-          type="text" 
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-        <button onClick={searchLocation}>Search</button>
-      </div>
+    <div style={{ width: '100%', height: '100%'}}>
       <LoadScript googleMapsApiKey="AIzaSyAu4d-DWWSviutRrLSdMll2JfoFLGY45MI">
         <GoogleMap
           mapContainerStyle={mapStyles}
           zoom={zoom}
-          center={mapCenter} 
+          center={mapCenter}
         >
           {locations.map((location, index) => (
             <Marker

@@ -25,8 +25,8 @@ class LoadingPage extends React.Component {
         {showContent ? (
           <h2>Căutare în curs...</h2>
         ) : (
-          <div>
-            <h2>Finding your destination...</h2>
+          <div >
+            <h2 className="text">Finding your destination...</h2>
             <div className="loader"></div> {/* Afișăm animația cercului care se rotește */}
           </div>
         )}

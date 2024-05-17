@@ -2,6 +2,7 @@ import React from 'react';
 import LoadingPage from './LoadingPage';
 import SearchResults from './SearchResults';
 import './FilterSidebar.css';
+import PageDetails from "./PageDetails.jsx";
 
 class FilterSidebar extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class FilterSidebar extends React.Component {
         { id: 3, country: 'Italy', city: 'Rome', petFriendly: false, wifi: true },
         { id: 4, country: 'Italy', city: 'Milan', petFriendly: false, wifi: false }
       ],
+      selectedLocation: null,
       countrySelected: false // Adăugăm countrySelected
     };
   }
@@ -59,13 +61,10 @@ class FilterSidebar extends React.Component {
   }
 
   createDropdown = (label, options) => {
-    const placeholderText = label === '' ? 'Country Name' : 'City Name';
-
     return (
-      <div key={label}>
-        <label>{label}</label>
-        <select onChange={(e) => this.handleFilterChange(label, e.target.value)}>
-          <option value="">{placeholderText}</option>
+      <div style={{ width: '256px' }}>
+        <select className="dropdown" onChange={(e) => this.handleFilterChange(label, e.target.value)}>
+          <option value="">{label}</option>
           {options.map((option, index) => (
             <option key={index} value={option.value}>{option.label}</option>
           ))}
@@ -77,8 +76,8 @@ class FilterSidebar extends React.Component {
   createInput = (label) => {
     return (
       <div key={label}>
-        <label>{label}</label>
-        <input type="text" onChange={(e) => this.handleFilterChange(label, e.target.value)} />
+        <label style={{marginRight: '12px'}}>{label}</label>
+        <input style={{width: '226px', borderRadius: '99px'}} type="text" onChange={(e) => this.handleFilterChange(label, e.target.value)} />
       </div>
     );
   }
@@ -95,7 +94,7 @@ class FilterSidebar extends React.Component {
   }
 
   render() {
-    const { loading, searchResults, countrySelected } = this.state;
+    const { loading, searchResults, selectedLocation } = this.state;
     const showResults = searchResults !== null;
 
     return (
@@ -107,12 +106,12 @@ class FilterSidebar extends React.Component {
             <h2>Find your Destination</h2>
 
             <div className="dropdown-container">
-              {this.createDropdown("", [
+              {this.createDropdown("Country Name", [
                 { label: "Option 1", value: "Option 1" },
                 { label: "Option 2", value: "Option 2" },
                 { label: "Option 3", value: "Option 3" }
               ])}
-              {this.createDropdown("Choose a city  ", [
+              {this.createDropdown("City Name", [
                 { label: "Option A", value: "Option A" },
                 { label: "Option B", value: "Option B" },
                 { label: "Option C", value: "Option C" }
@@ -141,14 +140,27 @@ class FilterSidebar extends React.Component {
         )}
 
         {!loading && !showResults && (
-          <button className="search-button" onClick={this.handleSearch} disabled={!Object.values(this.state.filters).some(value => value) || !countrySelected}>
+          <button className="search-button" onClick={this.handleSearch}>
             Search
           </button>
         )}
 
         {showResults && (
-          <SearchResults results={searchResults} />
+          <SearchResults results={searchResults} onButtonClicked={() => {
+            this.setState({selectedLocation: location})
+          }} onSearchStop={() => {this.setState({searchResults: null})}} />
         )}
+
+        {selectedLocation != null && (
+            <PageDetails location={selectedLocation} onClose={() => this.setState({selectedLocation: null})} />
+        )}
+
+        {selectedLocation == null && (
+            <button className="repackButton">
+              &lt;
+            </button>
+        )}
+
       </div>
     );
   }
