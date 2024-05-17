@@ -1,13 +1,14 @@
 import "./App.css";
-import MapComponent from "../pages/Map/MapComponent.jsx";
-import { LandingPage } from "../pages/Homepage/LandingPage/LandingPage.jsx";
 
+import LogIn from "../pages/Authentication/PageLogIn/LogIn.jsx";
+import { ContentWrapper } from "../pages/Miscellaneous/ContentWrapper.jsx";
 function App() {
   return (
-      <div className="App">
-        <MapComponent />
-        <LandingPage />
-      </div>
+    <div className="App">
+      <ContentWrapper type="vertical">
+        <LogIn />
+      </ContentWrapper>
+    </div>
   );
 }
 
