@@ -1,9 +1,33 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './shared/App.jsx'
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+import ReactDOM from "react-dom/client";
+import LandingPage from "./pages/Homepage/LandingPage/LandingPage.jsx";
+import LogIn from "./pages/Authentication/PageLogIn/LogIn.jsx";
+import SignUp from "./pages/Authentication/PageSignUp/SignUp.jsx";
+import ForgotPassword from "./pages/Authentication/PageForgotPassword/ForgotPassword.jsx";
+import MapComponent from "./pages/Map/MapComponent.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./shared/App.css";
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path: "/login",
+    element: <LogIn />,
+  },
+  {
+    path: "/forgotPwd",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/register",
+    element: <SignUp />,
+  },
+  {
+    path: "/map",
+    element: <MapComponent />,
+  },
+]);
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />
+);

@@ -1,15 +1,12 @@
-.App {
-  width: 100vw;
-  height: 100vh;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+#root {
+  width: 100vw;
+}
+body {
+  width: 100vw;
+  justify-content: flex-start;
 }
