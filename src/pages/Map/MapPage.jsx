@@ -1,4 +1,4 @@
-import MapComponent from "./map/MapComponent.jsx";
+import MapComponent from "./map-component/MapComponent.jsx";
 import Sidebar from "./map-sidebar/Sidebar.jsx";
 
 function MapPage() {

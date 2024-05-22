@@ -8,7 +8,7 @@ export const SidebarData = [
     {
         //title: "Home",
         icon: <img src={HomeIcon} alt="Home" style={{ width: '24px', height: '24px' }} />,
-        link: "/home"
+        link: "/"
     },
     {
         //title: "Map",
