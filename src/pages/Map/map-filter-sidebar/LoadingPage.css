@@ -1,0 +1,19 @@
+.loader {
+    border: 4px solid #f3f3f3; /* Cercul gri */
+    border-top: 4px solid #3498db; /* Cercul albastru */
+    border-radius: 50%; /* Face ca cercul să fie rotund */
+    width: 48px;
+    height: 48px;
+    animation: spin 1s linear infinite; /* Folosește animația spin definită mai jos */
+    margin: 24px auto; /* Centrează cercul */
+  }
+
+.text {
+    text-align: center !important;
+}
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); } /* La început, rotația este 0 grade */
+    100% { transform: rotate(360deg); } /* La final, rotația este de 360 de grade (se întoarce la poziția inițială) */
+  }
+  
