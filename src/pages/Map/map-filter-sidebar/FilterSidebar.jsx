@@ -3,6 +3,7 @@ import LoadingPage from './LoadingPage';
 import SearchResults from './SearchResults';
 import './FilterSidebar.css';
 import PageDetails from "./PageDetails.jsx";
+/* eslint-disable react/prop-types */
 
 class FilterSidebar extends React.Component {
   constructor(props) {
@@ -156,9 +157,10 @@ class FilterSidebar extends React.Component {
         )}
 
         {selectedLocation == null && (
-            <button className="repackButton">
-              &lt;
-            </button>
+            <button className="repackButton" onClick={this.props.toggleFilters}>
+            &lt;
+          </button>
+          
         )}
 
       </div>
