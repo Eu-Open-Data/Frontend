@@ -1,7 +1,7 @@
-import React from 'react';
-import LoadingPage from './LoadingPage';
-import SearchResults from './SearchResults';
-import './FilterSidebar.css';
+import React from "react";
+import LoadingPage from "./LoadingPage";
+import SearchResults from "./SearchResults";
+import "./FilterSidebar.css";
 import PageDetails from "./PageDetails.jsx";
 /* eslint-disable react/prop-types */
 
@@ -13,28 +13,56 @@ class FilterSidebar extends React.Component {
       loading: false,
       searchResults: null,
       locationsData: [
-        { id: 1, country: 'Option 1', city: 'Bucharest', petFriendly: true, wifi: true },
-        { id: 2, country: 'Romania', city: 'Cluj-Napoca', petFriendly: true, wifi: false },
-        { id: 3, country: 'Italy', city: 'Rome', petFriendly: false, wifi: true },
-        { id: 4, country: 'Italy', city: 'Milan', petFriendly: false, wifi: false }
+        {
+          id: 1,
+          country: "Option 1",
+          city: "Bucharest",
+          petFriendly: true,
+          wifi: true,
+        },
+        {
+          id: 2,
+          country: "Romania",
+          city: "Cluj-Napoca",
+          petFriendly: true,
+          wifi: false,
+        },
+        {
+          id: 3,
+          country: "Italy",
+          city: "Rome",
+          petFriendly: false,
+          wifi: true,
+        },
+        {
+          id: 4,
+          country: "Italy",
+          city: "Milan",
+          petFriendly: false,
+          wifi: false,
+        },
       ],
       selectedLocation: null,
-      countrySelected: false // Adăugăm countrySelected
+      countrySelected: false, // Adăugăm countrySelected
     };
   }
 
   handleFilterChange = (filterName, value) => {
     // Verificăm dacă filtrul este pentru țară și actualizăm countrySelected în consecință
-    if (filterName === '') {
+    if (filterName === "") {
       this.setState({ countrySelected: !!value });
     }
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       filters: {
         ...prevState.filters,
-        [filterName]: value
-      }
+        [filterName]: value,
+      },
     }));
-  }
+  };
+
+  handleSearchStop = () => {
+    this.setState({ searchResults: null, selectedLocation: null }); // Resetăm și selectedLocation
+  };
 
   handleSearch = async () => {
     this.setState({ loading: true });
@@ -45,54 +73,70 @@ class FilterSidebar extends React.Component {
       let filteredResults = [...this.state.locationsData];
 
       if (filters.country) {
-        filteredResults = filteredResults.filter(location => location.country === filters.country);
+        filteredResults = filteredResults.filter(
+          (location) => location.country === filters.country
+        );
       }
 
       if (filters.city) {
-        filteredResults = filteredResults.filter(location => location.city.toLowerCase().includes(filters.city.toLowerCase()));
+        filteredResults = filteredResults.filter((location) =>
+          location.city.toLowerCase().includes(filters.city.toLowerCase())
+        );
       }
 
       // Alte filtre...
 
       this.setState({ searchResults: filteredResults, loading: false });
     } catch (error) {
-      console.error('Eroare la simulare filtrare:', error);
+      console.error("Eroare la simulare filtrare:", error);
       this.setState({ loading: false });
     }
-  }
+  };
 
   createDropdown = (label, options) => {
     return (
-      <div style={{ width: '256px' }}>
-        <select className="dropdown" onChange={(e) => this.handleFilterChange(label, e.target.value)}>
+      <div style={{ width: "256px" }}>
+        <select
+          className="dropdown"
+          onChange={(e) => this.handleFilterChange(label, e.target.value)}
+        >
           <option value="">{label}</option>
           {options.map((option, index) => (
-            <option key={index} value={option.value}>{option.label}</option>
+            <option key={index} value={option.value}>
+              {option.label}
+            </option>
           ))}
         </select>
       </div>
     );
-  }
+  };
 
   createInput = (label) => {
     return (
       <div key={label}>
-        <label style={{marginRight: '12px'}}>{label}</label>
-        <input style={{width: '226px', borderRadius: '99px'}} type="text" onChange={(e) => this.handleFilterChange(label, e.target.value)} />
+        <label style={{ marginRight: "12px" }}>{label}</label>
+        <input
+          style={{ width: "226px", borderRadius: "99px" }}
+          type="text"
+          onChange={(e) => this.handleFilterChange(label, e.target.value)}
+        />
       </div>
     );
-  }
+  };
 
   createToggle = (label) => {
     return (
       <div key={label}>
         <label>
-          <input type="checkbox" onChange={(e) => this.handleFilterChange(label, e.target.checked)} />
+          <input
+            type="checkbox"
+            onChange={(e) => this.handleFilterChange(label, e.target.checked)}
+          />
           {label}
         </label>
       </div>
     );
-  }
+  };
 
   render() {
     const { loading, searchResults, selectedLocation } = this.state;
@@ -110,12 +154,12 @@ class FilterSidebar extends React.Component {
               {this.createDropdown("Country Name", [
                 { label: "Option 1", value: "Option 1" },
                 { label: "Option 2", value: "Option 2" },
-                { label: "Option 3", value: "Option 3" }
+                { label: "Option 3", value: "Option 3" },
               ])}
               {this.createDropdown("City Name", [
                 { label: "Option A", value: "Option A" },
                 { label: "Option B", value: "Option B" },
-                { label: "Option C", value: "Option C" }
+                { label: "Option C", value: "Option C" },
               ])}
             </div>
 
@@ -147,22 +191,27 @@ class FilterSidebar extends React.Component {
         )}
 
         {showResults && (
-          <SearchResults results={searchResults} onButtonClicked={() => {
-            this.setState({selectedLocation: location})
-          }} onSearchStop={() => {this.setState({searchResults: null})}} />
+          <SearchResults
+            results={searchResults}
+            onButtonClicked={(location) =>
+              this.setState({ selectedLocation: location })
+            }
+            onSearchStop={this.handleSearchStop} // Transmitem handleSearchStop
+          />
         )}
 
         {selectedLocation != null && (
-            <PageDetails location={selectedLocation} onClose={() => this.setState({selectedLocation: null})} />
+          <PageDetails
+            location={selectedLocation}
+            onClose={() => this.setState({ selectedLocation: null })}
+          />
         )}
 
         {selectedLocation == null && (
-            <button className="repackButton" onClick={this.props.toggleFilters}>
+          <button className="repackButton" onClick={this.props.toggleFilters}>
             &lt;
           </button>
-          
         )}
-
       </div>
     );
   }

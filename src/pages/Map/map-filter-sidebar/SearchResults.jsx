@@ -12,8 +12,12 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                     color: '#595959',
                     display: 'inline'
                 }}>Don&apos;t like what you see? </p>
-                <button style={{border: 'none'}} onClick={onSearchStop}><p style={{fontSize: '14px', fontWeight: '500', color: '#5CC1F9', display: 'inline'}}>Search again</p></button>
-            </div>
+<button style={{ border: 'none' }} onClick={onSearchStop}> 
+  {/* Apelăm onSearchStop primit ca prop */}
+  <p style={{ fontSize: '14px', fontWeight: '500', color: '#5CC1F9', display: 'inline' }}>
+    Search again
+  </p>
+</button>            </div>
             <div>
                 {results.length > 0 ? (
                     <ul style={{listStyleType: 'none'}}>
