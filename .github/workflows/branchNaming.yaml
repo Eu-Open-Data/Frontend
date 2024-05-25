@@ -17,5 +17,4 @@ jobs:
         if: github.ref_type == 'branch' || github.ref_type == 'pull_request'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          regex: '^CU-.{9}-.+$
-'
+          regex: '^CU-.{9}-.+$'

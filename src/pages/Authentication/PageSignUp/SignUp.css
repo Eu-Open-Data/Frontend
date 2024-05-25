@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+ }
+ 
+ body {
+   font-family: "Verdana", sans-serif;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh;
+   background-image: url('../src/assets/fundal.png');
+   
+ 
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-attachment: fixed;
+   margin: 0;
+   
+   
+ }
+ 
+ .container-signup {
+   width: 420px; 
+   background: white; 
+   box-shadow: -3px 4px 6px rgba(62, 56, 56, 0.1); 
+   border-radius: 40px;
+   padding: 1.8rem 2rem;
+   
+ }
+ 
+ .container-signup h1 {
+   color: #0281C8;
+   text-align: center;
+   font-size: 46px; 
+   font-weight: 500;
+   line-height: 8px;
+   word-wrap: break-word;
+   margin-top: 0.5rem;
+ }
+ 
+ .container-signup p {
+   color: #5CC1F9;
+   text-align: center;
+   padding: 0.1rem 0;
+   font-size: 22px;  
+   line-height: 28px; 
+   word-wrap: break-word;
+   
+ }
+ 
+ .container-signup .input-box {
+   position: relative;
+   width: 100%;
+   height: 40px;
+   margin: 40px 0;
+   padding: 2px;
+   text-align: center;
+ }
+ 
+ .container-signup .input-box-name {
+   width: 100%;
+   height: 40px;
+   margin: 50px 0;
+   padding: 2px;
+   display: flex;
+   justify-content: space-between;
+ }
+ 
+ 
+ .container-signup .input-box input {
+   width: 90%;
+   height: 100%;
+   border: 2px #5CC1F9 solid;
+   border-radius: 35px;
+   background: white;
+   text-align: center;
+   padding-top: 0.2rem;
+   font-size: 20px; 
+ }
+
+ .input-box-name input {
+   width: 100%;
+   height: 100%;
+   border: 2px #5CC1F9 solid;
+   border-radius: 35px;
+   background: white;
+   text-align: center;
+   font-size: 20px; 
+ }
+ 
+ .input-box-name .name,
+ .input-box-name input {
+   width: 10.2rem; 
+ }
+ 
+ .input-box input::placeholder, 
+ .input-box-name input::placeholder {
+   color: #B3B3B3;
+   font-size: 20px; 
+   word-wrap: break-word;
+ }
+ 
+ .container-signup button {
+   color: white;
+   background-color: #5CC1F9;
+   border-radius: 35px;
+   border: none;
+   padding: 0.8rem 3.2rem;
+   font-size: 22px;
+   margin-top: 3.5rem;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   cursor: pointer;
+ }
+ 
+ 
+ *, *::before, *::after {
+   transition: all 0.3s ease;
+ }
+ 
+ @media (min-width: 768px) and (max-width: 1024px) {
+   
+   .container-signup {
+     width: 380px; 
+     transition: width 0.5s ease;    
+   }
+   .container-signup h1 {
+     font-size: 44px; 
+     line-height: 5px;
+   }
+   .container-signup p {
+     font-size: 20px;  
+   }
+   .container-signup .input-box {
+     height: 36px;
+     margin: 35px 0;
+   }
+   
+   .container-signup .input-box-name {
+     height: 36px;
+     margin: 45px 0;
+   }
+   
+ .input-box-name .name,
+ .input-box-name input {
+   width: 9rem; 
+ }
+ 
+ .input-box input::placeholder, .input-box-name input::placeholder {
+   font-size: 17px; 
+ }
+ 
+ .container-signup button {
+   padding: 0.8rem 2.8rem;
+   font-size: 19px;
+   margin-top: 3.2rem;
+ }
+   
+ }
+ 
+ 
+ @media (min-width: 481px) and (max-width: 767px) {
+   
+   .container-signup {
+     width: 350px; 
+     transition: width 0.5s ease;    
+   }
+   .container-signup h1 {
+     font-size: 38px; 
+     line-height: 2px;
+   }
+   .container-signup p {
+     font-size: 18px;  
+   }
+   .container-signup .input-box {
+     height: 34px;
+     margin: 30px 0;
+   }
+   
+   .container-signup .input-box-name {
+     height: 34px;
+     margin: 40px 0;
+   }
+   
+ .input-box-name .name,
+ .input-box-name input {
+   width: 8rem; 
+ }
+ 
+ .input-box input::placeholder, .input-box-name input::placeholder {
+   font-size: 15px; 
+ }
+ 
+ .container-signup button {
+   padding: 0.7rem 2.6rem;
+   font-size: 16px;
+   margin-top: 3rem;
+ }
+   
+ }
+ 
+ 
+ @media (min-width: 320px) and (max-width: 480px) {
+   
+   .container-signup {
+     width: 300px; 
+     transition: width 0.5s ease;    
+   }
+   .container-signup h1 {
+     font-size: 34px; 
+     line-height: 2px;
+   }
+   .container-signup p {
+     font-size: 16px;  
+   }
+   .container-signup .input-box {
+     height: 30px;
+     margin: 25px 0;
+   }
+   
+   .container-signup .input-box-name {
+     height: 30px;
+     margin: 35px 0;
+   }
+   
+ .input-box-name .name,
+ .input-box-name input {
+   width: 6.6rem; 
+ }
+ 
+ .input-box input::placeholder, .input-box-name input::placeholder {
+   font-size: 13px; 
+ }
+ 
+ .container-signup button {
+   padding: 0.7rem 2.4rem;
+   font-size: 14px;
+   margin-top: 2.8rem;
+ }
+   
+ }

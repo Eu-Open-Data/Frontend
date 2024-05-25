@@ -21,7 +21,6 @@ jobs:
           else
             echo "S3_BUCKET=${{ secrets.S3_BUCKET }}" >> $GITHUB_ENV
           fi
-
       - name: Check out code
         uses: actions/checkout@v2
       
