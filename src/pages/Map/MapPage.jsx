@@ -3,6 +3,7 @@ import Sidebar from "./map-sidebar/Sidebar.jsx";
 
 function MapPage() {
 
+    
     return (
         <>
             <div style={{

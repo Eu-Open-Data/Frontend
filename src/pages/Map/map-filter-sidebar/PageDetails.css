@@ -11,3 +11,45 @@
     transform: translateX(1px);
     box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
 }
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+  }
+  
+  .rating {
+    display: flex;
+  }
+
+  
+  .rating svg { /* Ajusteaza stilul pictogramei SVG */
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+    fill: gold; /* Culoare de umplere pentru stea */
+  }
+
+  /* ... (restul stilurilor CSS) ... */
+
+.rating-container {
+    display: flex;
+     /* Aliniază elementele pe verticală */
+  }
+  
+  .rating-number {
+    margin-left: 8px; /* Spațiu între stele și numărul rating-ului */
+  }
+  
+  .votes-count {
+    margin-left: 4px; /* Spațiu între numărul rating-ului și numărul de voturi */
+    font-size: 12px; /* Dimensiune mai mică pentru numărul de voturi */
+    color: #595959; /* Culoare gri pentru numărul de voturi */
+  }
+  
+  /* ... (restul stilurilor CSS) ... */
+
+.error-message {
+    color: red; /* Sau altă culoare pentru a evidenția eroarea */
+  }
+  

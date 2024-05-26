@@ -13,33 +13,65 @@ class FilterSidebar extends React.Component {
       loading: false,
       searchResults: null,
       locationsData: [
-        {
-          id: 1,
-          country: "Option 1",
-          city: "Bucharest",
-          petFriendly: true,
-          wifi: true,
+        { 
+          id: 1, 
+          name: 'Hotel Confort',
+          type: 'Hotel', 
+          address: 'Strada Lalelelor, Nr. 15', 
+          rating: 4.2,
+          votes: 1405,
+          openHours: '08:00',
+          closeHours: '22:00',
+          imageUrl: "https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg",
+          description: 'A', 
+          amenities: ['Piscină', 'Restaurant', 'Saună', 'Parcare gratuită'],
+          phone: '+40 123 456 789',
+          website: 'https://www.hotelconfort.ro'
         },
-        {
-          id: 2,
-          country: "Romania",
-          city: "Cluj-Napoca",
-          petFriendly: true,
-          wifi: false,
+        { 
+          id: 2, 
+          name: 'Pensiunea Bucovina',
+          type: 'Pensiune', 
+          address: 'Strada Principala, Nr. 22', 
+          rating: 3.8,
+          votes: 980,
+          openHours: '08:00',
+          closeHours: '22:00',
+          imageUrl: "https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg",
+          description: 'B', 
+          amenities: ['Piscină', 'Restaurant', 'Saună', 'Parcare gratuită'],
+          phone: '+40 123 456 789',
+          website: 'https://www.hotelconfort.ro'
         },
-        {
-          id: 3,
-          country: "Italy",
-          city: "Rome",
-          petFriendly: false,
-          wifi: true,
+        { 
+          id: 3, 
+          name: 'Cabana La Munte',
+          type: 'Cabana', 
+          address: 'Strada Padurii, Nr. 10', 
+          rating: 4.7,
+          votes: 2003,
+          openHours: '08:00',
+          closeHours: '22:00',
+          imageUrl: "https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg",
+          description: 'C', 
+          amenities: ['Piscină', 'Restaurant', 'Saună', 'Parcare gratuită'],
+          phone: '+40 123 456 789',
+          website: 'https://www.hotelconfort.ro'
         },
-        {
-          id: 4,
-          country: "Italy",
-          city: "Milan",
-          petFriendly: false,
-          wifi: false,
+        { 
+          id: 4, 
+          name: 'Vila Maria',
+          type: 'Vila', 
+          address: 'Strada Florilor, Nr. 8', 
+          rating: 4.0,
+          votes: 850,
+          openHours: '08:00',
+          closeHours: '22:00',
+          imageUrl: "https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg",
+          description: 'D', 
+          amenities: ['Piscină', 'Restaurant', 'Saună', 'Parcare gratuită'],
+          phone: '+40 123 456 789',
+          website: 'https://www.hotelconfort.ro'
         },
       ],
       selectedLocation: null,
@@ -58,6 +90,10 @@ class FilterSidebar extends React.Component {
         [filterName]: value,
       },
     }));
+  };
+
+  handleClosePageDetails = () => {
+    this.setState({ selectedLocation: null }); 
   };
 
   handleSearchStop = () => {
@@ -190,23 +226,21 @@ class FilterSidebar extends React.Component {
           </button>
         )}
 
-        {showResults && (
-          <SearchResults
-            results={searchResults}
-            onButtonClicked={(location) =>
-              this.setState({ selectedLocation: location })
-            }
-            onSearchStop={this.handleSearchStop} // Transmitem handleSearchStop
-          />
-        )}
+{showResults && (
+    <SearchResults 
+      results={searchResults} 
+      onButtonClicked={(location) => this.setState({ selectedLocation: location })}
+      onSearchStop={this.handleSearchStop}
+      onClosePageDetails={this.handleClosePageDetails} // Transmitem handleClosePageDetails
+    />
+  )}
 
-        {selectedLocation != null && (
-          <PageDetails
-            location={selectedLocation}
-            onClose={() => this.setState({ selectedLocation: null })}
-          />
-        )}
-
+  {selectedLocation != null && (
+    <PageDetails 
+      location={selectedLocation} 
+      onClose={this.handleClosePageDetails} // Transmitem handleClosePageDetails
+    />
+  )}
         {selectedLocation == null && (
           <button className="repackButton" onClick={this.props.toggleFilters}>
             &lt;
