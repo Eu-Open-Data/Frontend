@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../map-sidebar/Sidebar.css";
 import { SidebarData } from "./SidebarData";
 import FilterSidebar from "../map-filter-sidebar/FilterSidebar.jsx"; 
+import FilterController from "../map-filter-sidebar/FiltersController.jsx";
 
 
 function Sidebar() {
@@ -37,6 +38,7 @@ function Sidebar() {
       {showFilters && (
           <div className="filtersSection">
               <FilterSidebar/>
+              <FilterController/>
           </div>
       )}
     </div>
