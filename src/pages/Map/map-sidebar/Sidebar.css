@@ -73,8 +73,14 @@
 }
 
 .repackButton {
-  right: -9px; /* Poziționare pentru a centra butonul pe marginea dreaptă */
+  position: absolute;
+  top: 50%;
+  right: -9px; /* Ajustează după cum e necesar */
+  transform: translateY(-50%);
+  /* ... restul stilului ... */
+  z-index: 2;  /* Adaugă z-index */
 }
+
 
 .filtersSection {
     position: absolute;
