@@ -36,7 +36,7 @@ function Sidebar() {
       )}
       {showFilters && (
           <div className="filtersSection">
-              <FilterSidebar/>
+              <FilterSidebar toggleFilters={toggleFilters} />
           </div>
       )}
     </div>
