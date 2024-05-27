@@ -15,6 +15,7 @@ const FilterSidebar = ({ toggleFilters }) => {
   const [countrySelected, setCountrySelected] = useState(false);
   const [allCountries, setAllCountries] = useState([]);
   const [allCities, setAllCities] = useState([]);
+  const [amenities, setAmenities] = useState([]);
   const locationsData = [
     {
       id: 1,
@@ -81,20 +82,34 @@ const FilterSidebar = ({ toggleFilters }) => {
       website: "https://www.hotelconfort.ro",
     },
   ];
-
-  const handleFilterChange = (filterName, value) => {
-    if (filterName === "") {
-      setCountrySelected(!!value);
-      fetchCities(value);
+  const handleCountryChange = async (country) => {
+    setCountrySelected(!!country);
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      country,
+      city: "", // Reset city filter when country changes
+    }));
+    if (country) {
+      await fetchCities(country);
+    } else {
+      setAllCities([]);
     }
+  };
+  const handleFilterChange = (filterName, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [filterName]: value,
     }));
-    fetchCities(value);
-    console.log(allCities);
-  };
 
+    if (filterName === "country") {
+      setCountrySelected(!!value);
+      fetchCities(value);
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        city: "", // Reset city filter when country changes
+      }));
+    }
+  };
   const handleClosePageDetails = () => {
     setSelectedLocation(null);
   };
@@ -133,12 +148,12 @@ const FilterSidebar = ({ toggleFilters }) => {
     }
   };
 
-  const createDropdown = (label, options) => {
+  const createDropdown = (label, options, handleChange) => {
     return (
       <div style={{ width: "256px" }}>
         <select
           className="dropdown"
-          onChange={(e) => handleFilterChange(label, e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
         >
           <option value="">{label}</option>
           {options.map((option, index) => (
@@ -180,6 +195,7 @@ const FilterSidebar = ({ toggleFilters }) => {
 
   const showResults = searchResults !== null;
   useEffect(() => {
+    console.log(fetchData(getData.AMENITIES));
     const fetchCountries = async () => {
       try {
         const response = await fetchData(getData.COUNTRIES);
@@ -194,13 +210,23 @@ const FilterSidebar = ({ toggleFilters }) => {
 
     fetchCountries();
   }, []);
+  const fetchAmenities = async () => {
+    try {
+      const response = await fetchData(getData.AMENITIES);
+      const amenit = JSON.parse(response);
+      setAmenities(Array.isArray(amenit) ? amenit : []);
+      console.log(amenities);
+    } catch (error) {
+      console.error("Error fetching amenities:", error);
+      setAmenities([]);
+    }
+  };
   const fetchCities = async (countryName) => {
     try {
       const response = await fetchData(getData.CITIES, {
         country: countryName,
       });
       const cities = JSON.parse(response);
-      console.log("Fetched cities:", cities);
       setAllCities(Array.isArray(cities) ? cities : []);
     } catch (error) {
       console.error("Error fetching cities:", error);
@@ -223,7 +249,8 @@ const FilterSidebar = ({ toggleFilters }) => {
                     label: country.name,
                     value: country.name,
                   }))
-                : []
+                : [],
+              (value) => handleFilterChange("country", value) // Handle country change
             )}
             {createDropdown(
               "City Name",
@@ -232,7 +259,8 @@ const FilterSidebar = ({ toggleFilters }) => {
                     label: city.name,
                     value: city.name,
                   }))
-                : []
+                : [],
+              (value) => handleFilterChange("city", value) // Handle city change
             )}
           </div>
 
