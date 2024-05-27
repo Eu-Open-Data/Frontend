@@ -5,7 +5,7 @@ const History = () => {
   const [vacations, setVacations] = useState([
     {
       city: 'City Name 1',
-      country: 'Country 1',
+      country: 'Country 1', 
       startDate: 'dd-mm-yyyy',
       endDate: 'dd-mm-yyyy',
       imageUrl: 'https://via.placeholder.com/50',
