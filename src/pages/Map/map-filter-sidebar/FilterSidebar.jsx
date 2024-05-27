@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoadingPage from "./LoadingPage";
 import SearchResults from "./SearchResults";
 import "./FilterSidebar.css";
+import "./SearchOptions.css";
 import PageDetails from "./PageDetails.jsx";
 import getData from "../map-filter-sidebar/fetch.enum.js";
 import fetchData from "../map-filter-sidebar/FiltersController.js";
+import SearchOptions from "./SearchOptions.jsx";
 const FilterSidebar = ({ toggleFilters }) => {
   const [filters, setFilters] = useState({});
   const [loading, setLoading] = useState(false);
@@ -16,6 +18,11 @@ const FilterSidebar = ({ toggleFilters }) => {
   const [allCountries, setAllCountries] = useState([]);
   const [allCities, setAllCities] = useState([]);
   const [amenities, setAmenities] = useState([]);
+  const [input, setInput] = useState("");
+  const [focusedInput, setFocusedInput] = useState(null);
+  const [inputPosition, setInputPosition] = useState({});
+  const [options, setOptions] = useState([]);
+  const inputRefs = useRef({});
   const locationsData = [
     {
       id: 1,
@@ -82,6 +89,23 @@ const FilterSidebar = ({ toggleFilters }) => {
       website: "https://www.hotelconfort.ro",
     },
   ];
+  const handleInput = () => {
+    setOptions(
+      amenities.filter((amenity) =>
+        amenity.name.toLowerCase().includes(input.toLowerCase())
+      )
+    );
+  };
+  const handleOptionSelect = (selectedOption) => {
+    setInput(selectedOption);
+  };
+  useEffect(() => {
+    fetchAmenities();
+  }, []);
+
+  useEffect(() => {
+    handleInput();
+  }, [input, amenities]);
   const handleCountryChange = async (country) => {
     setCountrySelected(!!country);
     setFilters((prevFilters) => ({
@@ -168,13 +192,44 @@ const FilterSidebar = ({ toggleFilters }) => {
 
   const createInput = (label) => {
     return (
-      <div key={label}>
+      <div key={label} style={{ position: "relative" }}>
         <label style={{ marginRight: "12px" }}>{label}</label>
         <input
+          ref={(el) => (inputRefs.current[label] = el)}
           style={{ width: "226px", borderRadius: "99px" }}
           type="text"
-          onChange={(e) => handleFilterChange(label, e.target.value)}
+          onFocus={() => {
+            setFocusedInput(label);
+            const rect = inputRefs.current[label].getBoundingClientRect();
+            setInputPosition({
+              top: rect.height + 8,
+              left: 0,
+              width: rect.width,
+            });
+          }}
+          onBlur={() => setFocusedInput(null)}
+          onChange={(e) => {
+            setInput(e.target.value);
+            handleFilterChange(label, e.target.value);
+          }}
         />
+        {focusedInput === label && (
+          <div className="search-container" style={{ ...inputPosition }}>
+            <ul className="options-list">
+              {options.map((option, index) => (
+                <li
+                  key={index}
+                  onClick={() => {
+                    console.log("Selected option:", option.name); // Debugging statement
+                    handleOptionSelect(option.name);
+                  }}
+                >
+                  {option.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     );
   };
@@ -267,19 +322,6 @@ const FilterSidebar = ({ toggleFilters }) => {
             {createInput("Filter 1  ")}
             {createInput("Filter 2  ")}
             {createInput("Filter 3  ")}
-          </div>
-
-          <div className="toggle-container">
-            <div className="toggle-group">
-              {createToggle("Extra 1")}
-              {createToggle("Extra 2")}
-              {createToggle("Extra 3")}
-            </div>
-            <div className="toggle-group">
-              {createToggle("Extra 4")}
-              {createToggle("Extra 5")}
-              {createToggle("Extra 6")}
-            </div>
           </div>
         </div>
       )}
