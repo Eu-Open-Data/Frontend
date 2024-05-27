@@ -215,7 +215,6 @@ const FilterSidebar = ({ toggleFilters }) => {
       const response = await fetchData(getData.AMENITIES);
       const amenit = JSON.parse(response);
       setAmenities(Array.isArray(amenit) ? amenit : []);
-      console.log(amenities);
     } catch (error) {
       console.error("Error fetching amenities:", error);
       setAmenities([]);
