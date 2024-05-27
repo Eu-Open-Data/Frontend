@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import { useEffect } from "react";
 import landingBg from "../../../assets/landingbg.jpg";
 import NavBar from "../../DemoNav/NavBar";
 import { Background } from "../../Miscellaneous/Background";
@@ -6,6 +8,7 @@ import "./LandingPage.css";
 const LandingPage = () => {
   //const bg = "../../../assets/landingbg.jpg";
   console.log("Landing");
+
   return (
     <>
       <NavBar />

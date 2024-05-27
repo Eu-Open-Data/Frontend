@@ -44,8 +44,6 @@ const PageDetails = ({ location, onClose }) => {
     if (value === 50) return "(Moderate)";
     return "(Very Bad)";
   };
-  
-
 
   return (
     <div className="page">
@@ -60,19 +58,23 @@ const PageDetails = ({ location, onClose }) => {
               alt={`Imagine pentru ${location.name}`}
               style={{ width: "100%", height: "256px" }}
             />
-            <div
-              className="favorite-heart"
-              onClick={toggleFavorite}
-            >
+            <div className="favorite-heart" onClick={toggleFavorite}>
               ❤
             </div>
           </div>
 
           <div className="page-header">
             <div className="title-rating">
-            <p style={{ fontSize: "20px", color: "#1F1F1F", fontWeight: "500", marginLeft: "-1.5px" }}>
-                          {location.name}
-                        </p>
+              <p
+                style={{
+                  fontSize: "20px",
+                  color: "#1F1F1F",
+                  fontWeight: "500",
+                  marginLeft: "-1.5px",
+                }}
+              >
+                {location.name}
+              </p>
               <div className="rating-container">
                 <div className="rating">
                   {Array.from(
@@ -96,13 +98,14 @@ const PageDetails = ({ location, onClose }) => {
               {location.type} <strong>•</strong> {location.address}
             </p>
             <p style={{ fontSize: "10px", fontWeight: "400", color: "#777" }}>
-              Open <strong>•</strong> {location.openHours} - Closes: {location.closeHours}
+              Open <strong>•</strong> {location.openHours} - Closes:{" "}
+              {location.closeHours}
             </p>
           </div>
 
           {isLoading ? (
             <p className="loading-text">Se încarcă...</p>
-  ) : error ? (
+          ) : error ? (
             <p className="error-message">{error}</p>
           ) : (
             <div className="result-details">
@@ -119,32 +122,32 @@ const PageDetails = ({ location, onClose }) => {
                 <div className="icon-item">
                   <img src={icon1} alt="Safety Index" className="info-icon" />
                   <span>Safety Index</span>
-                  <span 
-                className="number-value"
-                style={{ color: getNumberColor(safetyValue) }}
-              >
-                {safetyValue} {getAdditionalText(safetyValue)}
-              </span>
+                  <span
+                    className="number-value"
+                    style={{ color: getNumberColor(safetyValue) }}
+                  >
+                    {safetyValue} {getAdditionalText(safetyValue)}
+                  </span>
                 </div>
                 <div className="icon-item">
                   <img src={icon2} alt="Regulations" className="info-icon" />
                   <span>Regulations</span>
-                  <span 
-                className="number-value"
-                style={{ color: getNumberColor(regulationsValue) }}
-              >
-                {regulationsValue} {getAdditionalText(regulationsValue)}
-              </span>
+                  <span
+                    className="number-value"
+                    style={{ color: getNumberColor(regulationsValue) }}
+                  >
+                    {regulationsValue} {getAdditionalText(regulationsValue)}
+                  </span>
                 </div>
                 <div className="icon-item">
                   <img src={icon3} alt="Pollution" className="info-icon" />
                   <span>Pollution</span>
-                  <span 
-                className="number-value"
-                style={{ color: getNumberColor(pollutionValue) }}
-              >
-                {pollutionValue} {getAdditionalText(pollutionValue)}
-              </span>
+                  <span
+                    className="number-value"
+                    style={{ color: getNumberColor(pollutionValue) }}
+                  >
+                    {pollutionValue} {getAdditionalText(pollutionValue)}
+                  </span>
                 </div>
               </div>
             </div>
