@@ -10,46 +10,139 @@
     border-right: 1px solid #BFBFBF;
     transform: translateX(1px);
     box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
-}
+  }
 
-.page-header {
+  .page .favorite-heart { /* Aplicăm stilurile de poziționare pe containerul inimii */
+    position: absolute;
+    bottom: 10px; 
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    color: white; /* Culoare inițială albă */
+    z-index: 1; /* Asigură că inima este deasupra imaginii */
+    font-size: 36px; /* Sau orice altă valoare dorită */
+    text-shadow: -0.5px -0.5px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333; /* Contur negru */
+
+  }
+
+.page .favorite-heart:hover {
+    color: red; /* Culoare roșie la hover */
+  }
+
+  .page-header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 24px;
+  }
+  
+  .title-rating {
     display: flex;
     justify-content: space-between;
-    padding: 16px 24px;
+    align-items: center;
+  }
+  
+  .result-name {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  
+  .rating-container {
+    display: flex;
+    align-items: center;
   }
   
   .rating {
     display: flex;
   }
-
   
-  .rating svg { /* Ajusteaza stilul pictogramei SVG */
+  .rating svg {
     width: 16px;
     height: 16px;
     margin-left: 4px;
-    fill: gold; /* Culoare de umplere pentru stea */
-  }
-
-  /* ... (restul stilurilor CSS) ... */
-
-.rating-container {
-    display: flex;
-     /* Aliniază elementele pe verticală */
+    fill: gold;
   }
   
   .rating-number {
-    margin-left: 8px; /* Spațiu între stele și numărul rating-ului */
+    margin-left: 8px;
   }
   
   .votes-count {
-    margin-left: 4px; /* Spațiu între numărul rating-ului și numărul de voturi */
-    font-size: 12px; /* Dimensiune mai mică pentru numărul de voturi */
-    color: #595959; /* Culoare gri pentru numărul de voturi */
+    margin-left: 4px;
+    font-size: 12px;
+    color: #595959;
   }
   
-  /* ... (restul stilurilor CSS) ... */
+  .error-message {
+    color: red;
+  }
+  
+  .result-details {
+    padding: 0px 24px;
+    font-weight: 400;
+    font-size: 10px;
+  }
+  
+  .result-description {
+    margin: 8px 0;
+    font-size: 1em;
+    line-height: 1.4;
+  }
+  
+  .result-type, .result-address, .result-hours, .result-phone, .result-website {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+  }
+  
+  .result-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+  }
+  
+  .icons-section {
+    display: flex;
+    flex-direction: column;
+    margin: 16px 0;
+  }
+  
+  .icon-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .info-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+  
+  .repackButton {
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    transform: translateY(-50%);
+    background-color: #F5F5F5;
+    color: #BFBFBF;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 10px;
+    width: 16px;
+    height: 64px;
+    text-align: center;
+    line-height: 14px;
+    border: 1px solid #BFBFBF;
+    z-index: 2;
+  }
+  
+  .number-value {
+    margin-left: 8px; /* Sau orice altă valoare pentru spațiere */
+}
 
-.error-message {
-    color: red; /* Sau altă culoare pentru a evidenția eroarea */
+.loading-text {
+  margin-top: 40px;
+  margin-left: 25px; /* Sau orice altă valoare dorită */
   }
   
