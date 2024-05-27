@@ -1,0 +1,25 @@
+.search-container {
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  z-index: 1;
+}
+
+.options-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  max-height: 150px; /* Set a maximum height for scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.options-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.options-list li:hover {
+  background-color: #f0f0f0;
+}
