@@ -11,6 +11,7 @@ import fetchData from "../map-filter-sidebar/FiltersController.js";
 import SearchOptions from "./SearchOptions.jsx";
 const FilterSidebar = ({ toggleFilters }) => {
   const [filters, setFilters] = useState({});
+  const [activeFilters, setActiveFilters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -98,6 +99,19 @@ const FilterSidebar = ({ toggleFilters }) => {
   };
   const handleOptionSelect = (selectedOption) => {
     setInput(selectedOption);
+    updateActiveFilters(focusedInput, selectedOption);
+    console.log(activeFilters);
+  };
+  const updateActiveFilters = (filterName, value) => {
+    setActiveFilters((prevFilters) => {
+      const newFilters = prevFilters.filter(
+        (filter) => filter.name !== filterName
+      );
+      if (value) {
+        newFilters.push({ name: filterName, value });
+      }
+      return newFilters;
+    });
   };
   useEffect(() => {
     fetchAmenities();
@@ -198,6 +212,7 @@ const FilterSidebar = ({ toggleFilters }) => {
           ref={(el) => (inputRefs.current[label] = el)}
           style={{ width: "226px", borderRadius: "99px" }}
           type="text"
+          value={filters[label] || ""}
           onFocus={() => {
             setFocusedInput(label);
             const rect = inputRefs.current[label].getBoundingClientRect();
@@ -219,9 +234,9 @@ const FilterSidebar = ({ toggleFilters }) => {
               {options.map((option, index) => (
                 <li
                   key={index}
-                  onClick={() => {
-                    console.log("Selected option:", option.name); // Debugging statement
+                  onMouseDown={() => {
                     handleOptionSelect(option.name);
+                    handleFilterChange(label, option.name);
                   }}
                 >
                   {option.name}
@@ -230,20 +245,6 @@ const FilterSidebar = ({ toggleFilters }) => {
             </ul>
           </div>
         )}
-      </div>
-    );
-  };
-
-  const createToggle = (label) => {
-    return (
-      <div key={label}>
-        <label>
-          <input
-            type="checkbox"
-            onChange={(e) => handleFilterChange(label, e.target.checked)}
-          />
-          {label}
-        </label>
       </div>
     );
   };
