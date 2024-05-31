@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps*/
 import { useEffect, useRef, useState } from "react";
 import LoadingPage from "./LoadingPage";
 import SearchResults from "./SearchResults";
