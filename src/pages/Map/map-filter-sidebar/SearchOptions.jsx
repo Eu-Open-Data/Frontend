@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps*/
 import "./SearchOptions.css";
 import getData from "../map-filter-sidebar/fetch.enum.js";
 import fetchData from "../map-filter-sidebar/FiltersController.js";
