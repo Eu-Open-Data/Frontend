@@ -96,23 +96,50 @@ const PageDetails = ({ location, onClose }) => {
   );
 
   const renderReviews = () => (
-    <div>
-      <h2>Reviews</h2>
-      {location.reviews && location.reviews.length > 0 ? (
-        location.reviews.map((review, index) => (
-          <div key={index} className="review-item">
-            <h3>{review.author}</h3>
-            <p>{review.content}</p>
+    <div className="reviews-section">
+      <div className="reviews-header">
+        <h2>Rating</h2>
+        <div className="rating-container">
+          <div className="rating">
+            {Array.from({ length: Math.floor(location.rating) }, (_, index) => (
+              <StarIcon key={index} />
+            ))}
           </div>
-        ))
-      ) : (
-        <p>No reviews available.</p>
-      )}
+          <span className="rating-number">{location.rating.toFixed(1)}</span>
+          <span className="votes-count">({location.votesCount} voturi)</span>
+        </div>
+      </div>
+      <div className="write-review">
+        <button className="write-review-button">Write a review</button>
+      </div>
+      <div className="rating-divider"></div> {/* Aici adaugă linia */}
+      <div className="reviews-list">
+        {location.reviews && location.reviews.length > 0 ? (
+          location.reviews.map((review, index) => (
+            <div key={index} className="review-item">
+              <div className="review-author">
+                <h3>{review.author}</h3>
+                <div className="review-rating">
+                  {Array.from({ length: Math.floor(review.rating) }, (_, index) => (
+                    <StarIcon key={index} />
+                  ))}
+                </div>
+              </div>
+              <p>{review.content}</p>
+            </div>
+          ))
+        ) : (
+          <p>No reviews available.</p>
+        )}
+      </div>
     </div>
   );
+  
+  
+  
 
   const renderMore = () => (
-    <div>
+    <div className="more-section">
       <h2>More Locations</h2>
       {location.similarLocations && location.similarLocations.length > 0 ? (
         location.similarLocations.map((similarLocation, index) => (
