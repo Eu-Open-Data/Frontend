@@ -10,6 +10,7 @@
   border-right: 1px solid #BFBFBF;
   transform: translateX(1px);
   box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
+
   overflow-y: auto; /* Scroll vertical */
   overflow-x: hidden; /* Ascunde scroll-ul orizontal */
 }
@@ -20,6 +21,7 @@
   right: 10px;
   cursor: pointer;
   font-size: 24px;
+
   color: white;
   z-index: 1;
   font-size: 36px;
@@ -124,9 +126,11 @@
 }
 
 .repackButton {
-  position: absolute; /* Absolut pentru a-l face relativ la .page */
+
+  position: absolute;
   top: 50%;
-  right: -8px; /* Poziționare pe marginea dreaptă */
+  right: -8px;
+
   transform: translateY(-50%);
   background-color: #F5F5F5;
   color: #BFBFBF;
@@ -143,12 +147,15 @@
 }
 
 .number-value {
+
   margin-left: 8px;
+
 }
 
 .loading-text {
   margin-top: 40px;
   margin-left: 25px;
+
 }
 
 /* Section Buttons */
@@ -163,13 +170,17 @@
 .section-buttons button {
   background-color: transparent;
   border: none;
+
   padding: 8px 16px;
+
   font-size: 14px;
   cursor: pointer;
   color: grey;
   border-bottom: 2px solid transparent;
+
   width: 33.33%;
   box-sizing: border-box;
+
 }
 
 .section-buttons button:hover {
@@ -181,6 +192,7 @@
   border-bottom: 2px solid #5cc1f9;
   font-weight: bold;
 }
+
 
 /* Section Content */
 .overview-section,
@@ -279,4 +291,5 @@
   font-weight: 400;
   color: #595959;
 }
+
 
