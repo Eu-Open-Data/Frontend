@@ -1,4 +1,5 @@
 import { useState } from "react";
+/* eslint-disable no-unused-vars */
 import { ContentWrapper } from "../../Miscellaneous/ContentWrapper";
 import "./SignUp.css";
 import { useNavigate } from "react-router-dom";

@@ -1,147 +1,295 @@
 .page {
-    position: absolute;
-    top: 0;
-    left: 100%;
-    width: 384px;
-    height: 100%;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid #BFBFBF;
-    transform: translateX(1px);
-    box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
-  }
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 384px;
+  height: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #BFBFBF;
+  transform: translateX(1px);
+  box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
 
-  .page .favorite-heart { /* Aplicăm stilurile de poziționare pe containerul inimii */
-    position: absolute;
-    bottom: 10px; 
-    right: 10px;
-    cursor: pointer;
-    font-size: 24px;
-    color: white; /* Culoare inițială albă */
-    z-index: 1; /* Asigură că inima este deasupra imaginii */
-    font-size: 36px; /* Sau orice altă valoare dorită */
-    text-shadow: -0.5px -0.5px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333; /* Contur negru */
+  overflow-y: auto; /* Scroll vertical */
+  overflow-x: hidden; /* Ascunde scroll-ul orizontal */
+}
 
-  }
+.page .favorite-heart {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+
+  color: white;
+  z-index: 1;
+  font-size: 36px;
+  text-shadow: -0.5px -0.5px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333;
+}
 
 .page .favorite-heart:hover {
-    color: red; /* Culoare roșie la hover */
-  }
+  color: red;
+}
 
-  .page-header {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 24px;
-  }
-  
-  .title-rating {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .result-name {
-    font-weight: bold;
-    font-size: 1.2em;
-  }
-  
-  .rating-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .rating {
-    display: flex;
-  }
-  
-  .rating svg {
-    width: 16px;
-    height: 16px;
-    margin-left: 4px;
-    fill: gold;
-  }
-  
-  .rating-number {
-    margin-left: 8px;
-  }
-  
-  .votes-count {
-    margin-left: 4px;
-    font-size: 12px;
-    color: #595959;
-  }
-  
-  .error-message {
-    color: red;
-  }
-  
-  .result-details {
-    padding: 0px 24px;
-    font-weight: 400;
-    font-size: 10px;
-  }
-  
-  .result-description {
-    margin: 8px 0;
-    font-size: 1em;
-    line-height: 1.4;
-  }
-  
-  .result-type, .result-address, .result-hours, .result-phone, .result-website {
-    display: flex;
-    align-items: center;
-    margin: 4px 0;
-  }
-  
-  .result-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-  }
-  
-  .icons-section {
-    display: flex;
-    flex-direction: column;
-    margin: 16px 0;
-  }
-  
-  .icon-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  .info-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-  }
-  
-  .repackButton {
-    position: absolute;
-    top: 50%;
-    right: -5px;
-    transform: translateY(-50%);
-    background-color: #F5F5F5;
-    color: #BFBFBF;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 4px;
-    font-size: 10px;
-    width: 16px;
-    height: 64px;
-    text-align: center;
-    line-height: 14px;
-    border: 1px solid #BFBFBF;
-    z-index: 2;
-  }
-  
-  .number-value {
-    margin-left: 8px; /* Sau orice altă valoare pentru spațiere */
+.page-header {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 24px;
+}
+
+.title-rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-name {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+
+.rating {
+  display: flex;
+}
+
+.rating svg {
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  fill: gold;
+}
+
+.rating-number {
+  margin-left: 8px;
+}
+
+.votes-count {
+  margin-left: 4px;
+  font-size: 12px;
+  color: #595959;
+}
+
+.error-message {
+  color: red;
+}
+
+.result-details {
+  padding: 0px 24px;
+  font-weight: 400;
+  font-size: 10px;
+}
+
+.result-description {
+  margin: 8px 0;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+.result-type,
+.result-address,
+.result-hours,
+.result-phone,
+.result-website {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.result-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.icons-section {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+}
+
+.icon-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.info-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.repackButton {
+
+  position: absolute;
+  top: 50%;
+  right: -8px;
+
+  transform: translateY(-50%);
+  background-color: #F5F5F5;
+  color: #BFBFBF;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  width: 16px;
+  height: 64px;
+  text-align: center;
+  line-height: 14px;
+  border: 1px solid #BFBFBF;
+  z-index: 2;
+}
+
+.number-value {
+
+  margin-left: 8px;
+
 }
 
 .loading-text {
   margin-top: 40px;
-  margin-left: 25px; /* Sau orice altă valoare dorită */
-  }
+  margin-left: 25px;
+
+}
+
+/* Section Buttons */
+.section-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 16px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.section-buttons button {
+  background-color: transparent;
+  border: none;
+
+  padding: 8px 16px;
+
+  font-size: 14px;
+  cursor: pointer;
+  color: grey;
+  border-bottom: 2px solid transparent;
+
+  width: 33.33%;
+  box-sizing: border-box;
+
+}
+
+.section-buttons button:hover {
+  background-color: #f5f5f5;
+}
+
+.section-buttons button.active {
+  color: #5cc1f9;
+  border-bottom: 2px solid #5cc1f9;
+  font-weight: bold;
+}
+
+
+/* Section Content */
+.overview-section,
+.reviews-section,
+.more-section {
+  padding: 16px;
+}
+
+.reviews-section .reviews-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reviews-section h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.write-review {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.write-review-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc; /* Adaugă un contur de 1px cu culoarea gri */
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 20px; /* Adaugă un spațiu de 10px sub buton */
+
+}
+
+
+.write-review-button:hover {
+  background-color: #b3d2e3;
+}
+
+.reviews-section .review-item {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review-rating {
+  display: flex;
+}
+
+.review-rating svg {
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  fill: gold;
+}
+
+/* Scrollable review list */
+.reviews-list {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.reviews-section {
+  font-size: 12px;
+}
+
+.reviews-section * {
+  font-weight: 400;
+  color: #595959;
+}
+.reviews-header h2 {
+  color: black; /* Setează culoarea textului la gri */
+  font-size: 20px;
+}
+
+.rating-divider {
+  height: 0;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.more-section h2 {
+  color: black; /* Setează culoarea textului la gri */
+  font-size: 20px;
+  font-weight: 400;
+  color: #595959;
+}
+
+

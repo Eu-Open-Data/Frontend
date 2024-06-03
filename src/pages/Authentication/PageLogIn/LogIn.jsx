@@ -104,6 +104,6 @@ function LogIn() {
       </div>
     </ContentWrapper>
   );
-};
+}
 
 export default LogIn;

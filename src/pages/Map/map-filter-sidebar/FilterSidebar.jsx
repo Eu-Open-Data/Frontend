@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps*/
 import { useEffect, useRef, useState } from "react";
 import LoadingPage from "./LoadingPage";
 import SearchResults from "./SearchResults";
@@ -40,6 +41,11 @@ const FilterSidebar = ({ toggleFilters }) => {
       amenities: ["Piscină", "Restaurant", "Saună", "Parcare gratuită"],
       phone: "+40 123 456 789",
       website: "https://www.hotelconfort.ro",
+      reviews: [
+        { author: "User 1", rating: 5, content: "Review foarte bun." },
+        { author: "User 2", rating: 4, content: "Review bun." },
+        { author: "User 3", rating: 3, content: "Review mediu." }
+      ]
     },
     {
       id: 2,
@@ -56,6 +62,11 @@ const FilterSidebar = ({ toggleFilters }) => {
       amenities: ["Piscină", "Restaurant", "Saună", "Parcare gratuită"],
       phone: "+40 123 456 789",
       website: "https://www.hotelconfort.ro",
+      reviews: [
+        { author: "User 1", rating: 5, content: "Review foarte bun." },
+        { author: "User 2", rating: 4, content: "Review bun." },
+        { author: "User 3", rating: 3, content: "Review mediu." }
+      ]
     },
     {
       id: 3,
@@ -72,6 +83,11 @@ const FilterSidebar = ({ toggleFilters }) => {
       amenities: ["Piscină", "Restaurant", "Saună", "Parcare gratuită"],
       phone: "+40 123 456 789",
       website: "https://www.hotelconfort.ro",
+      reviews: [
+        { author: "User 1", rating: 5, content: "Review foarte bun." },
+        { author: "User 2", rating: 4, content: "Review bun." },
+        { author: "User 3", rating: 3, content: "Review mediu." }
+      ]
     },
     {
       id: 4,
@@ -88,6 +104,14 @@ const FilterSidebar = ({ toggleFilters }) => {
       amenities: ["Piscină", "Restaurant", "Saună", "Parcare gratuită"],
       phone: "+40 123 456 789",
       website: "https://www.hotelconfort.ro",
+      reviews: [
+        { author: "User 1", rating: 5, content: "Review foarte bun." },
+        { author: "User 2", rating: 4, content: "Review bun." },
+        { author: "User 3", rating: 3, content: "Review mediu." },
+        { author: "User 1", rating: 5, content: "Review foarte bun." },
+        { author: "User 2", rating: 4, content: "Review bun." },
+        { author: "User 3", rating: 3, content: "Review mediu." }
+      ]
     },
   ];
   const handleInput = () => {
