@@ -58,7 +58,7 @@ const PageDetails = ({ location, onClose }) => {
         </div>
         <div className="icon-item">
           <img src={icon5} alt="Website" className="info-icon" />
-          <a href={location.website}>{location.website}</a>
+          <a href={location.website_url}>{location.website_url}</a>
         </div>
         <br />
         <div className="icon-item">
@@ -120,9 +120,12 @@ const PageDetails = ({ location, onClose }) => {
               <div className="review-author">
                 <h3>{review.author}</h3>
                 <div className="review-rating">
-                  {Array.from({ length: Math.floor(review.rating) }, (_, index) => (
-                    <StarIcon key={index} />
-                  ))}
+                  {Array.from(
+                    { length: Math.floor(review.rating) },
+                    (_, index) => (
+                      <StarIcon key={index} />
+                    )
+                  )}
                 </div>
               </div>
               <p>{review.content}</p>
@@ -134,9 +137,6 @@ const PageDetails = ({ location, onClose }) => {
       </div>
     </div>
   );
-  
-  
-  
 
   const renderMore = () => (
     <div className="more-section">
@@ -184,7 +184,7 @@ const PageDetails = ({ location, onClose }) => {
           </button>
           <div style={{ position: "relative" }}>
             <img
-              src={location.imageUrl}
+              src={location.website_url}
               alt={`Imagine pentru ${location.name}`}
               style={{ width: "100%", height: "256px" }}
             />
