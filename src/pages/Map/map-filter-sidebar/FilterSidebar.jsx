@@ -21,11 +21,26 @@ const FilterSidebar = ({ toggleFilters }) => {
   const [allCities, setAllCities] = useState([]);
   const [amenities, setAmenities] = useState([]);
   const [input, setInput] = useState("");
+
   const [focusedInput, setFocusedInput] = useState(null);
   const [inputPosition, setInputPosition] = useState({});
   const [options, setOptions] = useState([]);
+
+  //FILTERS
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [count, setCount] = useState(20);
+  const [minRating, setMinRating] = useState(0.0);
+  const [minRatingLocation, setMinRatingLocation] = useState(0.0);
+  const [minRatingService, setMinRatingService] = useState(0.0);
+  const [minRatingSleep, setMinRatingSleep] = useState(0.0);
+  const [minRatingCleanliness, setMinRatingCleanliness] = useState(0.0);
+
   const inputRefs = useRef({});
-  const locationsData = [
+  const [locationsData, setLocationsData] = useState([]);
+  const locationsDataDEMO = [
     {
       id: 1,
       name: "Hotel Confort",
@@ -44,8 +59,8 @@ const FilterSidebar = ({ toggleFilters }) => {
       reviews: [
         { author: "User 1", rating: 5, content: "Review foarte bun." },
         { author: "User 2", rating: 4, content: "Review bun." },
-        { author: "User 3", rating: 3, content: "Review mediu." }
-      ]
+        { author: "User 3", rating: 3, content: "Review mediu." },
+      ],
     },
     {
       id: 2,
@@ -65,8 +80,8 @@ const FilterSidebar = ({ toggleFilters }) => {
       reviews: [
         { author: "User 1", rating: 5, content: "Review foarte bun." },
         { author: "User 2", rating: 4, content: "Review bun." },
-        { author: "User 3", rating: 3, content: "Review mediu." }
-      ]
+        { author: "User 3", rating: 3, content: "Review mediu." },
+      ],
     },
     {
       id: 3,
@@ -86,8 +101,8 @@ const FilterSidebar = ({ toggleFilters }) => {
       reviews: [
         { author: "User 1", rating: 5, content: "Review foarte bun." },
         { author: "User 2", rating: 4, content: "Review bun." },
-        { author: "User 3", rating: 3, content: "Review mediu." }
-      ]
+        { author: "User 3", rating: 3, content: "Review mediu." },
+      ],
     },
     {
       id: 4,
@@ -110,10 +125,13 @@ const FilterSidebar = ({ toggleFilters }) => {
         { author: "User 3", rating: 3, content: "Review mediu." },
         { author: "User 1", rating: 5, content: "Review foarte bun." },
         { author: "User 2", rating: 4, content: "Review bun." },
-        { author: "User 3", rating: 3, content: "Review mediu." }
-      ]
+        { author: "User 3", rating: 3, content: "Review mediu." },
+      ],
     },
   ];
+  useEffect(() => {
+    console.log(input);
+  }, [input]);
   const handleInput = () => {
     setOptions(
       amenities.filter((amenity) =>
@@ -144,27 +162,16 @@ const FilterSidebar = ({ toggleFilters }) => {
   useEffect(() => {
     handleInput();
   }, [input, amenities]);
-  const handleCountryChange = async (country) => {
-    setCountrySelected(!!country);
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      country,
-      city: "", // Reset city filter when country changes
-    }));
-    if (country) {
-      await fetchCities(country);
-    } else {
-      setAllCities([]);
-    }
-  };
+
   const handleFilterChange = (filterName, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [filterName]: value,
     }));
-
+    if (filterName === "city") setCity(value);
     if (filterName === "country") {
-      setCountrySelected(!!value);
+      setCountry(value);
+      setCountrySelected(value);
       fetchCities(value);
       setFilters((prevFilters) => ({
         ...prevFilters,
@@ -183,26 +190,42 @@ const FilterSidebar = ({ toggleFilters }) => {
 
   const handleSearch = async () => {
     setLoading(true);
+    const requestBody = {
+      token: sessionStorage.getItem("token"),
+      search_phrase: searchInput,
+      min_rating: minRating,
+      countries: country,
+      cities: city,
+      min_rating_cleanliness: minRatingCleanliness,
+      min_rating_service: minRatingService,
+      min_rating_location: minRatingLocation,
+      min_rating_sleep: minRatingSleep,
+    };
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      let filteredResults = [...locationsData];
+      //await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      if (filters.country) {
-        filteredResults = filteredResults.filter(
-          (location) => location.country === filters.country
-        );
-      }
+      await fetchData(getData.SEARCH, requestBody).then((res) =>
+        setSearchResults(JSON.parse(res))
+      );
 
-      if (filters.city) {
-        filteredResults = filteredResults.filter((location) =>
-          location.city.toLowerCase().includes(filters.city.toLowerCase())
-        );
-      }
+      // let filteredResults = [...locationsData];
 
-      // Other filters...
+      // if (filters.country) {
+      //   filteredResults = filteredResults.filter(
+      //     (location) => location.country === filters.country
+      //   );
+      // }
 
-      setSearchResults(filteredResults);
+      // if (filters.city) {
+      //   filteredResults = filteredResults.filter((location) =>
+      //     location.city.toLowerCase().includes(filters.city.toLowerCase())
+      //   );
+      // }
+
+      // // Other filters...
+
+      // setSearchResults([...locationsData]);
       setLoading(false);
     } catch (error) {
       console.error("Error during filter simulation:", error);
@@ -227,8 +250,7 @@ const FilterSidebar = ({ toggleFilters }) => {
       </div>
     );
   };
-
-  const createInput = (label) => {
+  const createSearchInput = (label) => {
     return (
       <div key={label} style={{ position: "relative" }}>
         <label style={{ marginRight: "12px" }}>{label}</label>
@@ -236,7 +258,7 @@ const FilterSidebar = ({ toggleFilters }) => {
           ref={(el) => (inputRefs.current[label] = el)}
           style={{ width: "226px", borderRadius: "99px" }}
           type="text"
-          value={filters[label] || ""}
+          value={searchInput || ""}
           onFocus={() => {
             setFocusedInput(label);
             const rect = inputRefs.current[label].getBoundingClientRect();
@@ -248,7 +270,60 @@ const FilterSidebar = ({ toggleFilters }) => {
           }}
           onBlur={() => setFocusedInput(null)}
           onChange={(e) => {
-            setInput(e.target.value);
+            setSearchInput(e.target.value);
+          }}
+        />
+      </div>
+    );
+  };
+  const createInput = (label, type, set, value) => {
+    return (
+      <div key={label} style={{ position: "relative" }}>
+        <label style={{ marginRight: "12px" }}>{label}</label>
+        <input
+          ref={(el) => (inputRefs.current[label] = el)}
+          style={{ width: "226px", borderRadius: "99px" }}
+          type={type}
+          value={value || ""}
+          onFocus={() => {
+            setFocusedInput(label);
+            const rect = inputRefs.current[label].getBoundingClientRect();
+            setInputPosition({
+              top: rect.height + 8,
+              left: 0,
+              width: rect.width,
+            });
+          }}
+          onBlur={() => setFocusedInput(null)}
+          onChange={(e) => {
+            set(e.target.value);
+            handleFilterChange(label, e.target.value);
+          }}
+        />
+      </div>
+    );
+  };
+  const createAmenityInput = (label, type) => {
+    return (
+      <div key={label} style={{ position: "relative" }}>
+        <label style={{ marginRight: "12px" }}>{label}</label>
+        <input
+          ref={(el) => (inputRefs.current[label] = el)}
+          style={{ width: "226px", borderRadius: "99px" }}
+          type={type}
+          value={amenities || ""}
+          onFocus={() => {
+            setFocusedInput(label);
+            const rect = inputRefs.current[label].getBoundingClientRect();
+            setInputPosition({
+              top: rect.height + 8,
+              left: 0,
+              width: rect.width,
+            });
+          }}
+          onBlur={() => setFocusedInput(null)}
+          onChange={(e) => {
+            setAmenities(e.target.value);
             handleFilterChange(label, e.target.value);
           }}
         />
@@ -272,7 +347,6 @@ const FilterSidebar = ({ toggleFilters }) => {
       </div>
     );
   };
-
   const showResults = searchResults !== null;
   useEffect(() => {
     console.log(fetchData(getData.AMENITIES));
@@ -344,9 +418,40 @@ const FilterSidebar = ({ toggleFilters }) => {
           </div>
 
           <div className="input-container">
-            {createInput("Filter 1  ")}
-            {createInput("Filter 2  ")}
-            {createInput("Filter 3  ")}
+            {createSearchInput("Search for:  ")}
+            {createInput(
+              "Overall Rating:  ",
+              "number",
+              setMinRating,
+              minRating
+            )}
+
+            {createInput(
+              "Location Rating: ",
+              "number",
+              setMinRatingLocation,
+              minRatingLocation
+            )}
+            {createInput(
+              "Service Rating: ",
+              "number",
+              setMinRatingService,
+              minRatingService
+            )}
+            {createInput(
+              "Cleanliness Rating: ",
+              "number",
+              setMinRatingCleanliness,
+              minRatingCleanliness
+            )}
+            {createInput(
+              "Sleep Rating: ",
+              "number",
+              setMinRatingSleep,
+              minRatingSleep
+            )}
+
+            {createInput("Amenity:  ", "text", null, null)}
           </div>
         </div>
       )}
