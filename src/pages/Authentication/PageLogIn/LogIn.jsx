@@ -9,7 +9,7 @@ function LogIn() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -17,7 +17,9 @@ function LogIn() {
   const validateFormLogin = () => {
     const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){8,}$/;
     if (!passwordRegex.test(password)) {
-      alert("Password must contain at least 8 characters, including at least one number.");
+      alert(
+        "Password must contain at least 8 characters, including at least one number."
+      );
       return false;
     }
     if (username === "" || password === "") {
@@ -36,16 +38,13 @@ function LogIn() {
       };
 
       try {
-        const response = await fetch(
-          "http://54.167.96.255:8081/auth/login",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          }
-        );
+        const response = await fetch("http://54.167.96.255:8081/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
 
         if (!response.ok) {
           const errorText = await response.text();
@@ -61,6 +60,7 @@ function LogIn() {
         }
 
         console.log("Success:", result);
+        sessionStorage.setItem("token", result.token);
         navigate("/map");
       } catch (error) {
         console.error("Error:", error);
@@ -93,7 +93,12 @@ function LogIn() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <img className="login-hide" src="../src/assets/password-hide.png" alt="toggle visibility" onClick={toggleShowPassword} />
+            <img
+              className="login-hide"
+              src="../src/assets/password-hide.png"
+              alt="toggle visibility"
+              onClick={toggleShowPassword}
+            />
           </div>
           {loginError && <p className="error">{loginError}</p>}
           <a href="/forgotPwd">
