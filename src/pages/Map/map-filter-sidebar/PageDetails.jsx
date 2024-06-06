@@ -29,19 +29,24 @@ const PageDetails = ({ location, onClose }) => {
     setIsFavorite(!isFavorite);
   };
 
-  const regulationsValue = 50;
-  const pollutionValue = 20;
-  const safetyValue = 80;
+  const safety = Math.round(((location.safety_index_score - 1) * 99) / 2.5) + 1;
+  const humidity = location.weather.humidity;
+  const pollution = ((location.air_pollution.aqi - 1) * 99) / 2 + 1;
 
   const getNumberColor = (value) => {
-    if (value > 50) return "green";
     if (value === 50) return "gold";
-    return "red";
+    if (value > 70) return "green";
+    if (value > 50) return "orange";
+    if (value > 25) return "lime";
+    if (value >= 0) return "red";
   };
 
   const getAdditionalText = (value) => {
-    if (value > 50) return "(Very Good)";
     if (value === 50) return "(Moderate)";
+    if (value > 70) return "(Very good)";
+    if (value > 50) return "(Good)";
+    if (value > 25) return "(Bad)";
+    if (value >= 0) return "(Very bad)";
     return "(Very Bad)";
   };
 
@@ -66,29 +71,29 @@ const PageDetails = ({ location, onClose }) => {
           <span>Safety Index</span>
           <span
             className="number-value"
-            style={{ color: getNumberColor(safetyValue) }}
+            style={{ color: getNumberColor(safety) }}
           >
-            {safetyValue} {getAdditionalText(safetyValue)}
+            {safety} {getAdditionalText(safety)}
           </span>
         </div>
         <div className="icon-item">
           <img src={icon2} alt="Regulations" className="info-icon" />
-          <span>Regulations</span>
+          <span>Air Humidity</span>
           <span
             className="number-value"
-            style={{ color: getNumberColor(regulationsValue) }}
+            style={{ color: getNumberColor(humidity) }}
           >
-            {regulationsValue} {getAdditionalText(regulationsValue)}
+            {humidity} {getAdditionalText(humidity)}
           </span>
         </div>
         <div className="icon-item">
           <img src={icon3} alt="Pollution" className="info-icon" />
-          <span>Pollution</span>
+          <span>Air Quality Index</span>
           <span
             className="number-value"
-            style={{ color: getNumberColor(pollutionValue) }}
+            style={{ color: getNumberColor(pollution) }}
           >
-            {pollutionValue} {getAdditionalText(pollutionValue)}
+            {pollution} {getAdditionalText(pollution)}
           </span>
         </div>
       </div>
@@ -105,7 +110,9 @@ const PageDetails = ({ location, onClose }) => {
               <StarIcon key={index} />
             ))}
           </div>
-          <span className="rating-number">{location.rating.toFixed(1)}</span>
+          <span className="rating-number">
+            {Number(location.rating).toFixed(1)}
+          </span>
           <span className="votes-count">({location.votesCount} voturi)</span>
         </div>
       </div>
@@ -215,7 +222,7 @@ const PageDetails = ({ location, onClose }) => {
                   )}
                 </div>
                 <span className="rating-number">
-                  {location.rating.toFixed(1)}
+                  {Number(location.rating).toFixed(1)}
                 </span>
                 <span className="votes-count">
                   ({location.votesCount} voturi)
