@@ -6,7 +6,6 @@ import icon2 from "/src/assets/Frame2.png";
 import icon3 from "/src/assets/Frame3.png";
 import icon4 from "/src/assets/Frame4.png";
 import icon5 from "/src/assets/Frame5.png";
-/* eslint-disable react/prop-types */
 
 const PageDetails = ({ location, onClose }) => {
   const [isLoading, setIsLoading] = useState(true);

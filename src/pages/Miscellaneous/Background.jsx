@@ -1,6 +1,5 @@
 import "./Background.css";
 
-// eslint-disable-next-line react/prop-types
 export const Background = ({ url }) => {
   console.log(url);
   return (

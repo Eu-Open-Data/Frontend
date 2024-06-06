@@ -2,7 +2,6 @@ import icon1 from "/src/assets/Frame1.png"; // Replace with the path to your ico
 import icon2 from "/src/assets/Frame2.png"; // Replace with the path to your icon
 import icon3 from "/src/assets/Frame3.png"; // Replace with the path to your icon
 import "./SearchResults.css";
-/* eslint-disable react/prop-types */
 
 const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
   const renderStars = (rating) => {
@@ -169,7 +168,7 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                       </div>
                     </div>
                     <img
-                      src={location.imageUrl}
+                      src={location.photo}
                       alt={`Image for ${location.name}`}
                       style={{
                         width: "80px",

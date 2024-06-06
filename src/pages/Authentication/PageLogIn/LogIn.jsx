@@ -15,10 +15,10 @@ function LogIn() {
   };
 
   const validateFormLogin = () => {
-    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){8,}$/;
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){1,}$/;
     if (!passwordRegex.test(password)) {
       alert(
-        "Password must contain at least 8 characters, including at least one number."
+        "Password must contain at least 1 character, including at least one number."
       );
       return false;
     }
