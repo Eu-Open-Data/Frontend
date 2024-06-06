@@ -21,6 +21,15 @@ body {
   margin: 0;
 }
 
+
+
+.login-hide {
+  position: absolute;
+  left: 355px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
 .container-login {
   width: 420px;
   background: white;
@@ -130,6 +139,11 @@ body {
     font-size: 19px;
     margin-top: 0.4rem;
   }
+  .login-hide {
+    left: 320px;
+    margin-top: 5px;
+
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
@@ -159,6 +173,11 @@ body {
     font-size: 16px;
     margin-top: 0.3rem;
   }
+  .login-hide {
+    left: 290px;
+    margin-top: 5px;
+
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -176,7 +195,7 @@ body {
   }
   .container-login .input-box {
     height: 30px;
-    margin: 35px 0;
+    margin: 65px 0;
   }
 
   .container-login .input-box input::placeholder {
@@ -187,5 +206,10 @@ body {
     padding: 0.7rem 2.4rem;
     font-size: 14px;
     margin-top: 0.2rem;
+  }
+  .login-hide {
+    left: 235px;
+    margin-top: 5px;
+
   }
 }

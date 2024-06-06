@@ -6,6 +6,7 @@ import ForgotPassword from "./pages/Authentication/PageForgotPassword/ForgotPass
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./shared/App.css";
 import MapPage from "./pages/Map/MapPage.jsx";
+import HistoryPage from "./pages/VacationHistory/HistoryPage.jsx";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
   {
     path: "/map",
     element: <MapPage />,
+  },
+  {
+    path: "/history",
+    element: <HistoryPage />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(

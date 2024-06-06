@@ -1,47 +1,50 @@
 .search-again-button {
-    background-color: transparent; /* Transparent background */
-  }
-  
-  .star {
-    font-size: 16px; /* Adjust as needed */
-  }
-  
-  .star.full {
-    color: gold; /* Color for full stars */
-  }
-  
-  .star.empty {
-    color: #333; /* Color for empty stars */
-  }
-  
-  .star.half {
-    position: relative; /* Position relative for half star */
-  }
-  
-  .star.half::before {
-    content: '★'; /* Half star */
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 50%; /* Fill half of the width */
-    overflow: hidden;
-    color: gold; /* Color for half star */
-  }
-  
-  .icon-number {
-    font-size: 10px; /* Adjust as needed */
-    font-weight: 400;
-    position: relative;
-    top: 1px; /* Raise number 2.5px */
-  }
-  
-  .icons-container {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 30px;
-  }
-  .icon-container {
-    display: flex;
-    align-items: center;
-    margin-right: 10px; /* Add space between each icon element */
-  }
+  background-color: transparent; /* Transparent background */
+}
+
+.star {
+  font-size: 16px; /* Adjust as needed */
+}
+
+.star.full {
+  color: gold; /* Color for full stars */
+}
+
+.star.empty {
+  color: #333; /* Color for empty stars */
+}
+
+.star.half {
+  position: relative; /* Position relative for half star */
+}
+
+.star.half::before {
+  content: "★"; /* Half star */
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%; /* Fill half of the width */
+  overflow: hidden;
+  color: gold; /* Color for half star */
+}
+
+.icon-number {
+  font-size: 10px; /* Adjust as needed */
+  font-weight: 400;
+  position: relative;
+  top: 1px; /* Raise number 2.5px */
+}
+
+.icons-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 30px;
+}
+.icon-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Add space between each icon element */
+}
+.search-results {
+  overflow-y: scroll;
+}
