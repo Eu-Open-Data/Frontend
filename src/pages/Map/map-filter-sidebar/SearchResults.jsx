@@ -141,13 +141,23 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                         </p>
                         <div className="icons-container">
                           {[icon1, icon2, icon3].map((icon, index) => {
-                            const number = getRandomNumber();
-                            const numberColor =
-                              number === 50
-                                ? "gold"
-                                : number < 50
-                                ? "red"
-                                : "green";
+                            let number = getRandomNumber();
+                            if (index === 0)
+                              number =
+                                Math.round(
+                                  ((location.safety_index_score - 1) * 99) / 2.5
+                                ) + 1;
+                            else if (index === 1)
+                              number = location.weather.humidity;
+                            else
+                              number =
+                                ((location.air_pollution.aqi - 1) * 99) / 2 + 1;
+                            let numberColor = "";
+                            if (number === 50) numberColor = "gold";
+                            else if (number > 70) numberColor = "green";
+                            else if (number > 50) numberColor = "orange";
+                            else if (number > 25) numberColor = "lime";
+                            else if (number >= 0) numberColor = "red";
 
                             return (
                               <div key={index} className="icon-container">
