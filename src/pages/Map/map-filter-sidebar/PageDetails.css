@@ -7,9 +7,9 @@
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #BFBFBF;
+  border-right: 1px solid #bfbfbf;
   transform: translateX(1px);
-  box-shadow: 10px 0px 15px -3px rgba(31, 31, 31, 0.10);
+  box-shadow: 10px 0 15px -3px rgba(31, 31, 31, 0.1);
 
   overflow-y: auto; /* Scroll vertical */
   overflow-x: hidden; /* Ascunde scroll-ul orizontal */
@@ -20,12 +20,11 @@
   bottom: 10px;
   right: 10px;
   cursor: pointer;
-  font-size: 24px;
-
   color: white;
   z-index: 1;
   font-size: 36px;
-  text-shadow: -0.5px -0.5px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333;
+  text-shadow: -0.5px -0.5px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333,
+    1px 1px 0 #333;
 }
 
 .page .favorite-heart:hover {
@@ -80,7 +79,7 @@
 }
 
 .result-details {
-  padding: 0px 24px;
+  padding: 0 24px;
   font-weight: 400;
   font-size: 10px;
 }
@@ -125,15 +124,19 @@
   margin-right: 8px;
 }
 
-.repackButton {
+.user-icon {
+  width: 64px;
+  height: 44px;
+}
 
+.repackButton {
   position: absolute;
   top: 50%;
   right: -8px;
 
   transform: translateY(-50%);
-  background-color: #F5F5F5;
-  color: #BFBFBF;
+  background-color: #f5f5f5;
+  color: #bfbfbf;
   cursor: pointer;
   padding: 5px;
   border-radius: 4px;
@@ -142,20 +145,17 @@
   height: 64px;
   text-align: center;
   line-height: 14px;
-  border: 1px solid #BFBFBF;
+  border: 1px solid #bfbfbf;
   z-index: 2;
 }
 
 .number-value {
-
   margin-left: 8px;
-
 }
 
 .loading-text {
   margin-top: 40px;
   margin-left: 25px;
-
 }
 
 /* Section Buttons */
@@ -180,7 +180,6 @@
 
   width: 33.33%;
   box-sizing: border-box;
-
 }
 
 .section-buttons button:hover {
@@ -192,7 +191,6 @@
   border-bottom: 2px solid #5cc1f9;
   font-weight: bold;
 }
-
 
 /* Section Content */
 .overview-section,
@@ -228,9 +226,7 @@
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 20px; /* Adaugă un spațiu de 10px sub buton */
-
 }
-
 
 .write-review-button:hover {
   background-color: #b3d2e3;
@@ -240,6 +236,11 @@
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
   margin-bottom: 10px;
+}
+
+.review-item {
+  display: flex;
+  justify-content: space-between;
 }
 
 .review-author {
@@ -261,7 +262,7 @@
 
 /* Scrollable review list */
 .reviews-list {
-  max-height: 400px;
+  max-height: 900px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -286,10 +287,8 @@
 }
 
 .more-section h2 {
-  color: black; /* Setează culoarea textului la gri */
+  /* Setează culoarea textului la gri */
   font-size: 20px;
   font-weight: 400;
   color: #595959;
 }
-
-

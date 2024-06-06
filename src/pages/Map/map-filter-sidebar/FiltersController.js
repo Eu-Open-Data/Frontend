@@ -1,9 +1,9 @@
 import getData from "./fetch.enum";
 
-const BACKEND_IP = "http://54.167.96.255:5000/";
+const ML_BACKEND_IP = "http://54.167.96.255:5000/";
 
 const fetchData = async (type, data) => {
-  const origin = BACKEND_IP + type;
+  const origin = ML_BACKEND_IP + type;
   const params = new URLSearchParams(data);
   let response = "No response";
 

@@ -3,7 +3,6 @@ import Sidebar from "./map-sidebar/Sidebar.jsx";
 import {useState} from "react";
 
 function MapPage() {
-
     const [locations, setLocations] = useState([]);
     const [map, setMap] = useState(null);
 

@@ -1,0 +1,212 @@
+body {
+    font-family: "Verdana", sans-serif;
+}
+
+.container {
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    margin-top: 10rem;
+ 
+}
+
+.container-album {
+    background-color: transparent;
+    margin: 1rem;
+    height: auto; 
+    width: 100%;
+    flex: 0 1 35%;
+    flex-direction: column;
+    box-shadow: 4px 0px 6px rgba(91.59, 77.47, 77.47, 0.10);
+    overflow: hidden; 
+}
+
+.title {
+    background-color: #0281C8;
+    height: 25%;
+    width: 100%;
+    margin: 0;
+    flex-shrink: 0;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    cursor: pointer;
+ 
+}
+
+.container-post-vacation {
+    background-color: #027fc827;
+    box-shadow: 4px 0px 6px rgba(91.59, 77.47, 77.47, 0.10);
+    margin: 1rem 2rem;
+    height: auto; /* Allow container to grow */
+    width: 20%;
+    flex: 0 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.bottom-title {
+    background-color: #0281C8;
+    height: 15%;
+    width: 100%;
+    margin: 0;
+    flex-shrink: 0;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.top-paragraph {
+    margin: 1rem 1rem;
+    margin-bottom: auto;
+    color: #0281C8;
+    font-size: 20px;
+    resize: none;
+    border: none;
+    background: transparent;
+    width: calc(100% - 2rem);
+    overflow: hidden; 
+    outline: none; 
+    height: auto;
+    min-height: 4rem;
+    word-wrap: break-word;
+}
+
+.container-add-photo {
+    background-color: transparent;
+    box-shadow: 4px 0px 6px rgba(91.59, 77.47, 77.47, 0.10);
+    margin: 1rem 2rem;
+    height: 24rem;
+    width: 30%;
+    flex: 0 1 auto;
+}
+
+.title-add-photo {
+    background-color: #0281C8;
+    height: 25%;
+    width: 100%;
+    margin: 0;
+    flex-shrink: 0;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+}
+
+.add-photo {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.display-before {
+    margin-top: 4rem;
+    cursor: pointer;
+}
+
+.add-photo-button {
+    background-color: #027fc86a;
+    border-radius: 30px;
+    border: none;
+    padding: 1rem;
+    width: 50%;
+    margin-top: 1rem;
+    color: #0281C8;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.display-after {
+    margin-top: 2rem;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 1rem;
+}
+
+.album-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    word-wrap: break-word; 
+    overflow: hidden;
+}
+
+.display-album {
+    margin-top: 2rem;
+    width: 150px;
+    height: 150px;
+}
+
+.details {
+    color: #0281C8;
+    margin-top: 1rem;
+    font-size: 20px;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+*, *::before, *::after {
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1250px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 5rem;
+    }
+
+    .bottom-title {
+       padding: 0.5rem 0;
+    }
+    .container-album,
+    .container-post-vacation,
+    .container-add-photo {
+        width: 50%;
+        margin: 1rem 0;
+    }
+    .title {
+        padding: 1.5rem 0 1.5rem 0;
+    }
+
+    .title, .bottom-title, .title-add-photo {
+        font-size: 20px;
+        text-align: center;
+       
+    }
+
+    .top-paragraph {
+        font-size: 18px;
+    }
+
+    .add-photo-button {
+        width: 50%;
+        font-size: 18px;
+    }
+
+    .display-after,
+    .display-album {
+        width: 120px;
+        height: 120px;
+    }
+
+    .details {
+        font-size: 18px;
+    }
+}

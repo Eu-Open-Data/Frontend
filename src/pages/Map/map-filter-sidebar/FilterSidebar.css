@@ -17,6 +17,8 @@
 .filters-container {
   flex: 1; /* Take up remaining space */
   padding: 32px;
+
+  overflow-y: scroll;
 }
 
 h2 {

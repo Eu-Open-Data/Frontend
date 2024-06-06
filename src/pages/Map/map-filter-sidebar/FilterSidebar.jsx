@@ -8,14 +8,14 @@ import "./SearchOptions.css";
 import PageDetails from "./PageDetails.jsx";
 import getData from "../map-filter-sidebar/fetch.enum.js";
 import fetchData from "../map-filter-sidebar/FiltersController.js";
-import SearchOptions from "./SearchOptions.jsx";
-import axios from "axios";
+import {requestGet} from "./DevController.js";
 const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
   const [filters, setFilters] = useState({});
   const [activeFilters, setActiveFilters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocationReviews, setSelectedLocationReviews] = useState([]);
   const [countrySelected, setCountrySelected] = useState(false);
   const [allCountries, setAllCountries] = useState([]);
   const [allCities, setAllCities] = useState([]);
@@ -191,6 +191,25 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
     setSearchResults(null);
     setSelectedLocation(null);
   };
+
+  const selectLocation = async (location) => {
+    setSelectedLocationReviews([]);
+    setSelectedLocation(location);
+    const response = await requestGet(getData.REVIEW.GET_ALL_BY_HOTEL + location.hotel_id);
+    if (response != "No response") {
+      let reviews = JSON.parse(response);
+      if (reviews) {
+        reviews = reviews.map(review => {
+          return {
+            author: "Author id: " + review.userId,
+            rating: review.rating,
+            content: review.reviewComment,
+          }
+        })
+        setSelectedLocationReviews(reviews);
+      }
+    }
+  }
 
   const handleSearch = async () => {
     setLoading(true);
@@ -497,12 +516,14 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
               />
           )}
         </div>
-        {selectedLocation == null && (
-            <button className="repackButton" onClick={toggleFilters}>
-              &lt;
-            </button>
-        )}
-      </div>
+
+
+      {selectedLocation == null && (
+        <button className="repackButton" onClick={toggleFilters}>
+          &lt;
+        </button>
+      )}
+    </div>
   );
 };
 
