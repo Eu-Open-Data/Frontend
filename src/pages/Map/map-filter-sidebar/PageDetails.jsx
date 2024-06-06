@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect, useReducer} from "react";
 import "./PageDetails.css";
 import StarIcon from "./StarIcon";
 import icon1 from "/src/assets/Frame1.png";
@@ -6,16 +6,24 @@ import icon2 from "/src/assets/Frame2.png";
 import icon3 from "/src/assets/Frame3.png";
 import icon4 from "/src/assets/Frame4.png";
 import icon5 from "/src/assets/Frame5.png";
+import UserIcon from "/src/assets/user_icon.png";
+import {requestPost} from "./DevController.js";
+import getData from "./fetch.enum.js";
+import AddReview from "./AddReview.jsx";
+import useToggle from "./useToggle.js";
 /* eslint-disable react/prop-types */
 
-const PageDetails = ({ location, onClose }) => {
+const PageDetails = ({ location, reviews, setReviews, onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState("Overview");
   const [isFavorite, setIsFavorite] = useState(false);
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+  const { on, toggler } = useToggle();
 
   useEffect(() => {
-    setTimeout(() => {
+    setTimeout(async () => {
       if (location) {
         setIsLoading(false);
       } else {
@@ -25,28 +33,46 @@ const PageDetails = ({ location, onClose }) => {
     }, 1000);
   }, [location]);
 
+  const addReview = async (content, rating) => {
+
+    let toSendObject = {
+      hotel: {
+        id: location.hotel_id
+      },
+      reviewComment: content,
+      rating: rating
+    }
+    const response = await requestPost(getData.REVIEW.CREATE, toSendObject);
+    // AICI AR TREBUI SA RETURNAM ID-UL REVIEW-ULUI DAR DAT FIIND FAPTUL CA NU MAI E TIMP .. RAMANE ASA URAT
+    if ('Review added successfully.' === response) {
+      let newReview = {
+        author: "Author id: X (nu stim pentru ca nu avem decat JWT)",
+        rating: rating,
+        content: content,
+      }
+      reviews.push(newReview);
+      setReviews(reviews);
+      forceUpdate()
+    }
+  }
+
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
   };
 
-  const safety = Math.round(((location.safety_index_score - 1) * 99) / 2.5) + 1;
-  const humidity = location.weather.humidity;
-  const pollution = ((location.air_pollution.aqi - 1) * 99) / 2 + 1;
+  const regulationsValue = 50;
+  const pollutionValue = 20;
+  const safetyValue = 80;
 
   const getNumberColor = (value) => {
+    if (value > 50) return "green";
     if (value === 50) return "gold";
-    if (value > 70) return "green";
-    if (value > 50) return "orange";
-    if (value > 25) return "lime";
-    if (value >= 0) return "red";
+    return "red";
   };
 
   const getAdditionalText = (value) => {
+    if (value > 50) return "(Very Good)";
     if (value === 50) return "(Moderate)";
-    if (value > 70) return "(Very good)";
-    if (value > 50) return "(Good)";
-    if (value > 25) return "(Bad)";
-    if (value >= 0) return "(Very bad)";
     return "(Very Bad)";
   };
 
@@ -71,29 +97,29 @@ const PageDetails = ({ location, onClose }) => {
           <span>Safety Index</span>
           <span
             className="number-value"
-            style={{ color: getNumberColor(safety) }}
+            style={{ color: getNumberColor(safetyValue) }}
           >
-            {safety} {getAdditionalText(safety)}
+            {safetyValue} {getAdditionalText(safetyValue)}
           </span>
         </div>
         <div className="icon-item">
           <img src={icon2} alt="Regulations" className="info-icon" />
-          <span>Air Humidity</span>
+          <span>Regulations</span>
           <span
             className="number-value"
-            style={{ color: getNumberColor(humidity) }}
+            style={{ color: getNumberColor(regulationsValue) }}
           >
-            {humidity} {getAdditionalText(humidity)}
+            {regulationsValue} {getAdditionalText(regulationsValue)}
           </span>
         </div>
         <div className="icon-item">
           <img src={icon3} alt="Pollution" className="info-icon" />
-          <span>Air Quality Index</span>
+          <span>Pollution</span>
           <span
             className="number-value"
-            style={{ color: getNumberColor(pollution) }}
+            style={{ color: getNumberColor(pollutionValue) }}
           >
-            {pollution} {getAdditionalText(pollution)}
+            {pollutionValue} {getAdditionalText(pollutionValue)}
           </span>
         </div>
       </div>
@@ -110,32 +136,49 @@ const PageDetails = ({ location, onClose }) => {
               <StarIcon key={index} />
             ))}
           </div>
-          <span className="rating-number">
-            {Number(location.rating).toFixed(1)}
-          </span>
+          <span className="rating-number">{parseFloat(location.rating)?.toFixed(1)}</span>
           <span className="votes-count">({location.votesCount} voturi)</span>
         </div>
       </div>
-      <div className="write-review">
-        <button className="write-review-button">Write a review</button>
+      <div>
+        {on && <AddReview
+            toggler={toggler}
+            publish={(content, rating) => {
+              addReview(content, rating);
+              toggler();
+            }}
+        />}
       </div>
+      {
+        !on && <div className="write-review">
+            <button className="write-review-button" onClick={() => toggler()}>Write a review</button>
+          </div>
+      }
+
       <div className="rating-divider"></div> {/* Aici adaugă linia */}
       <div className="reviews-list">
-        {location.reviews && location.reviews.length > 0 ? (
-          location.reviews.map((review, index) => (
+        {reviews && reviews.length > 0 ? (
+          reviews.map((review, index) => (
             <div key={index} className="review-item">
+
               <div className="review-author">
-                <h3>{review.author}</h3>
-                <div className="review-rating">
-                  {Array.from(
-                    { length: Math.floor(review.rating) },
-                    (_, index) => (
-                      <StarIcon key={index} />
-                    )
-                  )}
+                <div className="review-icon">
+                  <img src={UserIcon} alt="User icon" className="user-icon" />
+                </div>
+                <div className="review-author-name">
+                  <h3>{review.author}</h3>
+                  <p>{review.content}</p>
                 </div>
               </div>
-              <p>{review.content}</p>
+              <div className="review-rating">
+                {Array.from(
+                    { length: Math.floor(review.rating) },
+                    (_, index) => (
+                        <StarIcon key={index} />
+                    )
+                )}
+              </div>
+
             </div>
           ))
         ) : (
@@ -222,7 +265,7 @@ const PageDetails = ({ location, onClose }) => {
                   )}
                 </div>
                 <span className="rating-number">
-                  {Number(location.rating).toFixed(1)}
+                  {parseFloat(location.rating)?.toFixed(1)}
                 </span>
                 <span className="votes-count">
                   ({location.votesCount} voturi)

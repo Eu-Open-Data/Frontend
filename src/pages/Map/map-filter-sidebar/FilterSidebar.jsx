@@ -9,13 +9,14 @@ import "./SearchOptions.css";
 import PageDetails from "./PageDetails.jsx";
 import getData from "../map-filter-sidebar/fetch.enum.js";
 import fetchData from "../map-filter-sidebar/FiltersController.js";
-import SearchOptions from "./SearchOptions.jsx";
+import {requestGet} from "./DevController.js";
 const FilterSidebar = ({ toggleFilters }) => {
   const [filters, setFilters] = useState({});
   const [activeFilters, setActiveFilters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocationReviews, setSelectedLocationReviews] = useState([]);
   const [countrySelected, setCountrySelected] = useState(false);
   const [allCountries, setAllCountries] = useState([]);
   const [allCities, setAllCities] = useState([]);
@@ -187,6 +188,25 @@ const FilterSidebar = ({ toggleFilters }) => {
     setSearchResults(null);
     setSelectedLocation(null);
   };
+
+  const selectLocation = async (location) => {
+    setSelectedLocationReviews([]);
+    setSelectedLocation(location);
+    const response = await requestGet(getData.REVIEW.GET_ALL_BY_HOTEL + location.hotel_id);
+    if (response != "No response") {
+      let reviews = JSON.parse(response);
+      if (reviews) {
+        reviews = reviews.map(review => {
+          return {
+            author: "Author id: " + review.userId,
+            rating: review.rating,
+            content: review.reviewComment,
+          }
+        })
+        setSelectedLocationReviews(reviews);
+      }
+    }
+  }
 
   const handleSearch = async () => {
     setLoading(true);
@@ -465,7 +485,7 @@ const FilterSidebar = ({ toggleFilters }) => {
       {showResults && (
         <SearchResults
           results={searchResults}
-          onButtonClicked={(location) => setSelectedLocation(location)}
+          onButtonClicked={(location) => selectLocation(location)}
           onSearchStop={handleSearchStop}
           onClosePageDetails={handleClosePageDetails}
         />
@@ -474,6 +494,8 @@ const FilterSidebar = ({ toggleFilters }) => {
       {selectedLocation != null && (
         <PageDetails
           location={selectedLocation}
+          reviews={selectedLocationReviews}
+          setReviews={setSelectedLocationReviews}
           onClose={handleClosePageDetails}
         />
       )}

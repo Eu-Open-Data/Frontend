@@ -2,8 +2,6 @@ import MapComponent from "./map-component/MapComponent.jsx";
 import Sidebar from "./map-sidebar/Sidebar.jsx";
 
 function MapPage() {
-
-    
     return (
         <>
             <div style={{
