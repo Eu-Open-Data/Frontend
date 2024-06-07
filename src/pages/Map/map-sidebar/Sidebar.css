@@ -67,6 +67,7 @@
   text-align: center;
   line-height: 14px; /* Centrare verticală a textului */
   border: 1px solid #bfbfbf;
+  z-index: 100;
 }
 
 .unpackButton {
