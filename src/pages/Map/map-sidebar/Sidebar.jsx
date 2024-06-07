@@ -1,10 +1,9 @@
 import { useState } from "react";
 import "../map-sidebar/Sidebar.css";
 import { SidebarData } from "./SidebarData";
-import FilterSidebar from "../map-filter-sidebar/FilterSidebar.jsx"; 
+import FilterSidebar from "../map-filter-sidebar/FilterSidebar.jsx";
 
-
-function Sidebar() {
+function Sidebar({onLocationsUpdated, map}) {
   const [showFilters, setShowFilters] = useState(false);
 
   const toggleFilters = () => {
@@ -36,7 +35,7 @@ function Sidebar() {
       )}
       {showFilters && (
           <div className="filtersSection">
-              <FilterSidebar toggleFilters={toggleFilters} />
+              <FilterSidebar toggleFilters={toggleFilters} onLocationsUpdated={onLocationsUpdated} map={map} />
           </div>
       )}
     </div>

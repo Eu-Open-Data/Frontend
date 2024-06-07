@@ -17,14 +17,10 @@ class LoadingPage extends React.Component {
   }
 
   render() {
-    const { showContent } = this.state;
-
     return (
       <div className="loading-page">
         {/* Afișăm conținutul dacă showContent este true, altfel afișăm animația */}
-        {showContent ? (
-          <h2>Căutare în curs...</h2>
-        ) : (
+        {(
           <div >
             <h2 className="text">Finding your destination...</h2>
             <div className="loader"></div> {/* Afișăm animația cercului care se rotește */}

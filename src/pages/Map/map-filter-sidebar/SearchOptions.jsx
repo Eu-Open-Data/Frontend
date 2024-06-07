@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps*/
 import "./SearchOptions.css";
 import getData from "../map-filter-sidebar/fetch.enum.js";

@@ -1,8 +1,13 @@
+.filter-sidebar-container {
+  width: 384px;
+  height: 100%;
+}
+
 .filter-sidebar {
   position: relative;
   background-color: white;
   /*box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);*/
-  min-width: 384px;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -82,6 +87,7 @@ h2 {
 }
 
 .input-container > div input[type="text"],
+.input-container > div input[type="number"],
 .input-container > div input[type="checkbox"] {
   outline: none;
   padding: 5px;

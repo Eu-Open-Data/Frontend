@@ -32,7 +32,7 @@ export const SidebarData = [
         style={{ width: "24px", height: "24px" }}
       />
     ),
-    link: "/login",
+    link: "/history",
   },
   {
     //title: "Save",
@@ -43,7 +43,7 @@ export const SidebarData = [
         style={{ width: "24px", height: "24px" }}
       />
     ),
-    link: "/login",
+    link: "/album",
   },
   {
     //title: "Exit",

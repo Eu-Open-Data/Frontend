@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./shared/App.css";
 import MapPage from "./pages/Map/MapPage.jsx";
 import HistoryPage from "./pages/VacationHistory/HistoryPage.jsx";
+import MyAlbum from "./pages/MyAlbum/MyAlbum.jsx";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
   {
     path: "/history",
     element: <HistoryPage />,
+  },
+  {
+    path: "/album",
+    element: <MyAlbum />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
