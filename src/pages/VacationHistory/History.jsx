@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './History.css';
 import '../Map/map-filter-sidebar/LoadingPage.css';
 import axios from "axios";
 import {GoogleMap, LoadScript} from "@react-google-maps/api";
 import {useNavigate} from "react-router-dom";
+
+/* global google */
 
 const History = () => {
   const [vacations, setVacations] = useState(null);
