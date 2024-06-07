@@ -11,9 +11,9 @@ import { requestPost } from "./DevController.js";
 import getData from "./fetch.enum.js";
 import AddReview from "./AddReview.jsx";
 import useToggle from "./useToggle.js";
-/* eslint-disable react/prop-types */
+import axios from "axios";
 
-const PageDetails = ({ location, reviews, setReviews, onClose }) => {
+const PageDetails = ({ location, reviews, setReviews }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState("Overview");
@@ -23,6 +23,8 @@ const PageDetails = ({ location, reviews, setReviews, onClose }) => {
   const { on, toggler } = useToggle();
 
   useEffect(() => {
+    axios.get(`http://54.167.96.255:5000/location/${location.hotel_id}?token=${sessionStorage.getItem("token")}`)
+        .then(res => console.log(res));
     setTimeout(async () => {
       if (location) {
         setIsLoading(false);
@@ -236,12 +238,9 @@ const PageDetails = ({ location, reviews, setReviews, onClose }) => {
     <div className="page">
       {location && (
         <>
-          <button className="repackButton" onClick={onClose}>
-            &lt;
-          </button>
           <div style={{ position: "relative" }}>
             <img
-              src={location.website_url}
+              src={location.photo}
               alt={`Imagine pentru ${location.name}`}
               style={{ width: "100%", height: "256px" }}
             />
@@ -275,7 +274,7 @@ const PageDetails = ({ location, reviews, setReviews, onClose }) => {
                   {parseFloat(location.rating)?.toFixed(1)}
                 </span>
                 <span className="votes-count">
-                  ({location.votesCount} voturi)
+                  ({location.votesCount}voturi)
                 </span>
               </div>
             </div>

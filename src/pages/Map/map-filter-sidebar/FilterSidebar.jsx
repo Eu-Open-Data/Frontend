@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps*/
 import { useEffect, useRef, useState } from "react";
@@ -10,8 +9,9 @@ import "./SearchOptions.css";
 import PageDetails from "./PageDetails.jsx";
 import getData from "../map-filter-sidebar/fetch.enum.js";
 import fetchData from "../map-filter-sidebar/FiltersController.js";
-import { requestGet } from "./DevController.js";
-const FilterSidebar = ({ toggleFilters }) => {
+
+import {requestGet} from "./DevController.js";
+const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
   const [filters, setFilters] = useState({});
   const [activeFilters, setActiveFilters] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,6 +28,8 @@ const FilterSidebar = ({ toggleFilters }) => {
   const [inputPosition, setInputPosition] = useState({});
   const [options, setOptions] = useState([]);
 
+  const google = window.google;
+
   //FILTERS
   const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [country, setCountry] = useState("");
@@ -40,6 +42,8 @@ const FilterSidebar = ({ toggleFilters }) => {
   const [minRatingService, setMinRatingService] = useState(0.0);
   const [minRatingSleep, setMinRatingSleep] = useState(0.0);
   const [minRatingCleanliness, setMinRatingCleanliness] = useState(0.0);
+
+  const API_KEY = "AIzaSyAu4d-DWWSviutRrLSdMll2JfoFLGY45MI";
 
   const inputRefs = useRef({});
   const [locationsData, setLocationsData] = useState([]);
@@ -223,17 +227,49 @@ const FilterSidebar = ({ toggleFilters }) => {
       min_rating_service: minRatingService,
       min_rating_location: minRatingLocation,
       min_rating_sleep: minRatingSleep,
+      max_count: 20
     };
 
     try {
       //await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      await fetchData(getData.SEARCH, requestBody).then((res) =>
-        setSearchResults(JSON.parse(res))
-      );
 
-      setLoading(false);
-    } catch (error) {
+      fetchData(getData.SEARCH, requestBody).then((res) => {
+        let results = JSON.parse(res);
+        let promises = [];
+        results.forEach((x) => {
+          let service = new google.maps.places.PlacesService(map);
+
+          promises.push(new Promise((resolve, reject) => {
+            service.findPlaceFromQuery({
+              query: x.name + " " + x.address,
+              fields: ['place_id', 'photos'],
+            }, (results, status) => {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                if (!results || !results[0].photos) {
+                  resolve(null); // Resolve with null if no results or no photos
+                } else {
+                  x.photo = results[0].photos[0].getUrl();
+                  resolve(x);
+                }
+              } else {
+                reject(`PlacesServiceStatus not OK: ${status}`);
+              }
+            });
+          }).catch(error => {
+            console.error(`Error fetching place data for ${x.name}: ${error}`);
+          }));
+        });
+
+        Promise.allSettled(promises).then((results) => {
+          results = results.map(x => x.value);
+          setSearchResults(results);
+          setLoading(false);
+        })
+
+      });
+        }
+      catch (error) {
       console.error("Error during filter simulation:", error);
       setLoading(false);
     }
@@ -427,44 +463,46 @@ const FilterSidebar = ({ toggleFilters }) => {
     }
   };
   return (
-    <div className="filter-sidebar">
-      {loading && <LoadingPage />}
+      <div className="filter-sidebar-container">
+        <div className="filter-sidebar">
+          {loading && <LoadingPage />}
 
-      {!loading && !showResults && (
-        <div className="filters-container">
-          <h2>Find your Destination</h2>
+          {!loading && !showResults && (
+              <div className="filters-container">
+                <h2>Find your Destination</h2>
 
-          <div className="dropdown-container">
-            {createDropdown(
-              "Country Name",
-              Array.isArray(allCountries)
-                ? allCountries.map((country) => ({
-                    label: country.name,
-                    value: country.name,
-                  }))
-                : [],
-              (value) => handleFilterChange("country", value) // Handle country change
-            )}
-            {createDropdown(
-              "City Name",
-              Array.isArray(allCities)
-                ? allCities.map((city) => ({
-                    label: city.name,
-                    value: city.name,
-                  }))
-                : [],
-              (value) => handleFilterChange("city", value) // Handle city change
-            )}
-          </div>
+                <div className="dropdown-container">
+                  {createDropdown(
+                      "Country Name",
+                      Array.isArray(allCountries)
+                          ? allCountries.map((country) => ({
+                            label: country.name,
+                            value: country.name,
+                          }))
+                          : [],
+                      (value) => handleFilterChange("country", value) // Handle country change
+                  )}
+                  {createDropdown(
+                      "City Name",
+                      Array.isArray(allCities)
+                          ? allCities.map((city) => ({
+                            label: city.name,
+                            value: city.name,
+                          }))
+                          : [],
+                      (value) => handleFilterChange("city", value) // Handle city change
+                  )}
+                </div>
 
-          <div className="input-container">
-            {createSearchInput("Search for:  ")}
-            {createInput(
-              "Overall Rating:  ",
-              "number",
-              setMinRating,
-              minRating
-            )}
+                <div className="input-container">
+                  {createSearchInput("Search for:  ")}
+                  {createInput(
+                      "Overall Rating:  ",
+                      "number",
+                      setMinRating,
+                      minRating
+                  )}
+
 
             {createInput(
               "Location Rating: ",
@@ -502,29 +540,30 @@ const FilterSidebar = ({ toggleFilters }) => {
         </div>
       )}
 
-      {!loading && !showResults && (
-        <button className="search-button" onClick={handleSearch}>
-          Search
-        </button>
-      )}
 
-      {showResults && (
-        <SearchResults
-          results={searchResults}
-          onButtonClicked={(location) => selectLocation(location)}
-          onSearchStop={handleSearchStop}
-          onClosePageDetails={handleClosePageDetails}
-        />
-      )}
+          {!loading && !showResults && (
+              <button className="search-button" onClick={handleSearch}>
+                Search
+              </button>
+          )}
 
-      {selectedLocation != null && (
-        <PageDetails
-          location={selectedLocation}
-          reviews={selectedLocationReviews}
-          setReviews={setSelectedLocationReviews}
-          onClose={handleClosePageDetails}
-        />
-      )}
+          {showResults && (
+              <SearchResults
+                  results={searchResults}
+                  onButtonClicked={(location) => setSelectedLocation(location)}
+                  onSearchStop={handleSearchStop}
+                  onClosePageDetails={handleClosePageDetails}
+              />
+          )}
+
+          {selectedLocation != null && (
+              <PageDetails
+                  location={selectedLocation}
+                  onClose={handleClosePageDetails}
+              />
+          )}
+        </div>
+
 
       {selectedLocation == null && (
         <button className="repackButton" onClick={toggleFilters}>
