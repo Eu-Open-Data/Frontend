@@ -242,9 +242,11 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
             }, (results, status) => {
               if (status === google.maps.places.PlacesServiceStatus.OK) {
                 if (!results || !results[0].photos) {
-                  resolve(null); // Resolve with null if no results or no photos
+                  resolve(""); // Resolve with null if no results or no photos
                 } else {
                   x.photo = results[0].photos[0].getUrl();
+                  if(x.photo == null)
+                    x.photo = "";
                   resolve(x);
                 }
               } else {
@@ -513,6 +515,8 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
               <PageDetails
                   location={selectedLocation}
                   onClose={handleClosePageDetails}
+                  map={map}
+                  setLocation={(location) => setSelectedLocation(location)}
               />
           )}
         </div>

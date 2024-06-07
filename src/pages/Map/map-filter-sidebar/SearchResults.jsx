@@ -178,7 +178,7 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                       </div>
                     </div>
                     <img
-                      src={location.photo}
+                      src={location.photo ?? ""}
                       alt={`Image for ${location.name}`}
                       style={{
                         width: "80px",

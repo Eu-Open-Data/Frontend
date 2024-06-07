@@ -34,9 +34,11 @@ const History = () => {
                                 }, (results, status) => {
                                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                                         if (!results || !results[0].photos) {
-                                            resolve(null); // Resolve with null if no results or no photos
+                                            resolve(""); // Resolve with null if no results or no photos
                                         } else {
                                             x.photo = results[0].photos[0].getUrl();
+                                            if(x.photo == null)
+                                                x.photo = "";
                                             resolve(x);
                                         }
                                     } else {
@@ -63,7 +65,7 @@ const History = () => {
                 {vacations.map((vacation, index) => (
                     <div key={index} className="vacation-card">
                         <div className="image-container">
-                            <img src={vacation.photo} />
+                            <img src={vacation.photo ?? ""} />
                         </div>
                         <div className="vacation-info">
                             <div className="city-name">{vacation.hotel.name}</div>
