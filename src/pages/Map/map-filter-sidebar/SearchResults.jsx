@@ -77,9 +77,9 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
       <div>
         {results.length > 0 ? (
           <ul style={{ listStyleType: "none" }}>
-            {results.map((location) => (
+            {results?.map((location) => (
               <li
-                key={location.id}
+                key={location?.id}
                 style={{ borderBottom: "1px solid #BFBFBF" }}
               >
                 <button
@@ -103,10 +103,10 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                             fontWeight: "500",
                           }}
                         >
-                          {location.name}
+                          {location?.name}
                         </p>
                         <div style={{ display: "flex", alignItems: "center" }}>
-                          {renderStars(location.rating)}
+                          {renderStars(location?.rating)}
                           <p
                             style={{
                               fontSize: "12px",
@@ -115,8 +115,8 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                               marginLeft: "8px",
                             }}
                           >
-                            {location.rating} (
-                            {location.votes?.toLocaleString()})
+                            {location?.rating} (
+                            {location?.votes?.toLocaleString()})
                           </p>
                         </div>
                         <p
@@ -126,7 +126,8 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                             color: "#595959",
                           }}
                         >
-                          {location.type} <strong>•</strong> {location.address}
+                          {location?.type} <strong>•</strong>{" "}
+                          {location?.address}
                         </p>
                         <p
                           style={{
@@ -135,8 +136,8 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                             color: "#777",
                           }}
                         >
-                          Open: {location.openHours} - Close:{" "}
-                          {location.closeHours}
+                          Open: {location?.openHours} - Close:{" "}
+                          {location?.closeHours}
                         </p>
                         <div className="icons-container">
                           {[icon1, icon2, icon3].map((icon, index) => {
@@ -144,13 +145,15 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                             if (index === 0)
                               number =
                                 Math.round(
-                                  ((location.safety_index_score - 1) * 99) / 2.5
+                                  ((location?.safety_index_score - 1) * 99) /
+                                    2.5
                                 ) + 1;
                             else if (index === 1)
-                              number = location.weather.humidity;
+                              number = location?.weather.humidity;
                             else
                               number =
-                                ((location.air_pollution.aqi - 1) * 99) / 2 + 1;
+                                ((location?.air_pollution.aqi - 1) * 99) / 2 +
+                                1;
                             let numberColor = "";
                             if (number === 50) numberColor = "gold";
                             else if (number > 70) numberColor = "green";
@@ -178,8 +181,8 @@ const SearchResults = ({ results, onButtonClicked, onSearchStop }) => {
                       </div>
                     </div>
                     <img
-                      src={location.photo ?? ""}
-                      alt={`Image for ${location.name}`}
+                      src={location?.photo}
+                      alt={`Image for ${location?.name}`}
                       style={{
                         width: "80px",
                         height: "80px",

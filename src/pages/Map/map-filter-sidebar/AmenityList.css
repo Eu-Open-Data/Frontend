@@ -1,0 +1,47 @@
+.add-amenity {
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 50px;
+  width: 9rem;
+  height: 2rem;
+  margin-top: 0;
+  border: none;
+  cursor: pointer;
+}
+.add-amenity:active {
+  background-color: rgb(151, 187, 255);
+}
+.list {
+  width: 100%;
+  list-style-type: none;
+}
+.amenity-item {
+  width: 80%;
+  background-color: grey;
+  min-height: 2rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  text-indent: 1rem;
+  flex-wrap: wrap;
+}
+.list-container {
+  width: 100%;
+  display: flex;
+}
+.inline-item {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+.remove-amenity {
+  background-color: rgb(251, 61, 99);
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+.remove-amenity:hover {
+  background-color: rgb(226, 114, 136);
+}

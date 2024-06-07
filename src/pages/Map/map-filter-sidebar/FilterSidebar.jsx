@@ -4,10 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import LoadingPage from "./LoadingPage";
 import SearchResults from "./SearchResults";
 import "./FilterSidebar.css";
+import "./AmenityList.css";
 import "./SearchOptions.css";
 import PageDetails from "./PageDetails.jsx";
 import getData from "../map-filter-sidebar/fetch.enum.js";
 import fetchData from "../map-filter-sidebar/FiltersController.js";
+
 import {requestGet} from "./DevController.js";
 const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
   const [filters, setFilters] = useState({});
@@ -29,6 +31,7 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
   const google = window.google;
 
   //FILTERS
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -146,7 +149,6 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
   const handleOptionSelect = (selectedOption) => {
     setInput(selectedOption);
     updateActiveFilters(focusedInput, selectedOption);
-    console.log(activeFilters);
   };
   const updateActiveFilters = (filterName, value) => {
     setActiveFilters((prevFilters) => {
@@ -195,21 +197,23 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
   const selectLocation = async (location) => {
     setSelectedLocationReviews([]);
     setSelectedLocation(location);
-    const response = await requestGet(getData.REVIEW.GET_ALL_BY_HOTEL + location.hotel_id);
+    const response = await requestGet(
+      getData.REVIEW.GET_ALL_BY_HOTEL + location.hotel_id
+    );
     if (response != "No response") {
       let reviews = JSON.parse(response);
       if (reviews) {
-        reviews = reviews.map(review => {
+        reviews = reviews.map((review) => {
           return {
             author: "Author id: " + review.userId,
             rating: review.rating,
             content: review.reviewComment,
-          }
-        })
+          };
+        });
         setSelectedLocationReviews(reviews);
       }
     }
-  }
+  };
 
   const handleSearch = async () => {
     setLoading(true);
@@ -228,6 +232,7 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
 
     try {
       //await new Promise((resolve) => setTimeout(resolve, 2000));
+
 
       fetchData(getData.SEARCH, requestBody).then((res) => {
         let results = JSON.parse(res);
@@ -317,11 +322,12 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
   };
   const createInput = (label, type, set, value) => {
     return (
-      <div key={label} style={{ position: "relative" }}>
+      <div key={label} style={{ position: "relative", height: "2rem" }}>
         <label style={{ marginRight: "12px" }}>{label}</label>
         <input
+          className="number-input"
           ref={(el) => (inputRefs.current[label] = el)}
-          style={{ width: "226px", borderRadius: "99px" }}
+          style={{ width: "4rem", borderRadius: "99px", height: "2rem" }}
           type={type}
           value={value || ""}
           onFocus={() => {
@@ -342,15 +348,48 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
       </div>
     );
   };
+  const removeAmenity = (name) => {
+    let newList = selectedAmenities.filter((item) => item !== name);
+    setSelectedAmenities([...newList]);
+  };
+  const displayAmenityList = () => {
+    return (
+      <div className="list-container">
+        <ul className="list">
+          {selectedAmenities.map((amenity, index) => (
+            <span key={index} className="inline-item">
+              <li className="amenity-item">{amenity}</li>
+              <button
+                className="remove-amenity"
+                onClick={() => removeAmenity(amenity)}
+              >
+                X
+              </button>
+            </span>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+  const addNewAmenity = async () => {
+    let alreadyExist = false;
+    await selectedAmenities.forEach((amenity) => {
+      if (amenity === input) alreadyExist = true;
+    });
+    if (!alreadyExist) {
+      await setSelectedAmenities([...selectedAmenities, input]);
+      await setInput("");
+    }
+  };
   const createAmenityInput = (label, type) => {
     return (
       <div key={label} style={{ position: "relative" }}>
         <label style={{ marginRight: "12px" }}>{label}</label>
         <input
           ref={(el) => (inputRefs.current[label] = el)}
-          style={{ width: "226px", borderRadius: "99px" }}
+          style={{ width: "226px", borderRadius: "99px", marginBottom: "0" }}
           type={type}
-          value={amenities || ""}
+          value={input || ""}
           onFocus={() => {
             setFocusedInput(label);
             const rect = inputRefs.current[label].getBoundingClientRect();
@@ -362,7 +401,7 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
           }}
           onBlur={() => setFocusedInput(null)}
           onChange={(e) => {
-            setAmenities(e.target.value);
+            setInput(e.target.value);
             handleFilterChange(label, e.target.value);
           }}
         />
@@ -466,35 +505,43 @@ const FilterSidebar = ({ toggleFilters, onLocationsUpdated, map }) => {
                       minRating
                   )}
 
-                  {createInput(
-                      "Location Rating: ",
-                      "number",
-                      setMinRatingLocation,
-                      minRatingLocation
-                  )}
-                  {createInput(
-                      "Service Rating: ",
-                      "number",
-                      setMinRatingService,
-                      minRatingService
-                  )}
-                  {createInput(
-                      "Cleanliness Rating: ",
-                      "number",
-                      setMinRatingCleanliness,
-                      minRatingCleanliness
-                  )}
-                  {createInput(
-                      "Sleep Rating: ",
-                      "number",
-                      setMinRatingSleep,
-                      minRatingSleep
-                  )}
 
-                  {createInput("Amenity:  ", "text", null, null)}
-                </div>
-              </div>
-          )}
+            {createInput(
+              "Location Rating: ",
+              "number",
+              setMinRatingLocation,
+              minRatingLocation
+            )}
+            {createInput(
+              "Service Rating: ",
+              "number",
+              setMinRatingService,
+              minRatingService
+            )}
+            {createInput(
+              "Cleanliness Rating: ",
+              "number",
+              setMinRatingCleanliness,
+              minRatingCleanliness
+            )}
+
+            {createInput(
+              "Sleep Rating: ",
+              "number",
+              setMinRatingSleep,
+              minRatingSleep
+            )}
+
+            {createAmenityInput("Amenity:  ", "text")}
+            <button className="add-amenity" onClick={addNewAmenity}>
+              Add amenity
+            </button>
+          </div>
+
+          {displayAmenityList()}
+        </div>
+      )}
+
 
           {!loading && !showResults && (
               <button className="search-button" onClick={handleSearch}>
