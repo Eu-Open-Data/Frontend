@@ -7,7 +7,7 @@ import icon3 from "/src/assets/Frame3.png";
 import icon4 from "/src/assets/Frame4.png";
 import icon5 from "/src/assets/Frame5.png";
 import UserIcon from "/src/assets/user_icon.png";
-import {requestPost} from "./DevController.js";
+import { requestPost } from "./DevController.js";
 import getData from "./fetch.enum.js";
 import AddReview from "./AddReview.jsx";
 import useToggle from "./useToggle.js";
