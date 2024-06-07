@@ -13,16 +13,55 @@ import AddReview from "./AddReview.jsx";
 import useToggle from "./useToggle.js";
 import axios from "axios";
 
-const PageDetails = ({ location, reviews, setReviews }) => {
+/* global google */
+
+const PageDetails = ({ location, reviews, setReviews, map, setLocation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState("Overview");
   const [isFavorite, setIsFavorite] = useState(false);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [similarLocations, setSimilarLocations] = useState([]);
 
   const { on, toggler } = useToggle();
 
   useEffect(() => {
+    axios.get(`http://54.167.96.255:5000/recommend/${location.hotel_id}?max_count=10`)
+        .then(res => {
+          let data = res.data.replaceAll("NaN", "\"\"");
+          let results = JSON.parse(data);
+          let promises = [];
+          let service = new google.maps.places.PlacesService(map);
+          results.forEach((x) => {
+            promises.push(new Promise((resolve, reject) => {
+              service.findPlaceFromQuery({
+                query: x.name + " " + x.address,
+                fields: ['place_id', 'photos'],
+              }, (results, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                  if (!results || !results[0].photos) {
+                    resolve(""); // Resolve with null if no results or no photos
+                  } else {
+                    x.photo = results[0].photos[0].getUrl();
+                    if(x.photo == null)
+                      x.photo = "";
+                    resolve(x);
+                  }
+                } else {
+                  reject(`PlacesServiceStatus not OK: ${status}`);
+                }
+              });
+            }).catch(error => {
+              console.error(`Error fetching place data for ${x.name}: ${error}`);
+            }));
+          });
+
+          Promise.allSettled(promises).then((results) => {
+            results = results.map(x => x.value);
+            console.log(results);
+            setSimilarLocations(results);
+          })
+        });
     axios.get(`http://54.167.96.255:5000/location/${location.hotel_id}?token=${sessionStorage.getItem("token")}`)
         .then(res => console.log(res));
     setTimeout(async () => {
@@ -61,9 +100,15 @@ const PageDetails = ({ location, reviews, setReviews }) => {
     setIsFavorite(!isFavorite);
   };
 
-  const safety = Math.round(((location.safety_index_score - 1) * 99) / 2.5) + 1;
-  const humidity = location.weather.humidity;
-  const pollution = ((location.air_pollution.aqi - 1) * 99) / 2 + 1;
+  let safety = 0;
+  let humidity = 0;
+  let pollution = 0;
+  if(location.safety_index_score)
+  {
+    safety = Math.round(((location.safety_index_score - 1) * 99) / 2.5) + 1;
+    humidity = location.weather.humidity;
+    pollution = ((location.air_pollution.aqi - 1) * 99) / 2 + 1;
+  }
 
   const getNumberColor = (value) => {
     if (value === 50) return "gold";
@@ -198,28 +243,29 @@ const PageDetails = ({ location, reviews, setReviews }) => {
   );
 
   const renderMore = () => (
-    <div className="more-section">
-      <h2>More Locations</h2>
-      {location.similarLocations && location.similarLocations.length > 0 ? (
-        location.similarLocations.map((similarLocation, index) => (
-          <div key={index} className="similar-location-item">
-            <h3>{similarLocation.name}</h3>
-            <p>{similarLocation.address}</p>
-            <p>{similarLocation.hours}</p>
-            <a
-              href={similarLocation.website}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {similarLocation.website}
-            </a>
-          </div>
-        ))
-      ) : (
-        <p>No similar locations available.</p>
-      )}
-    </div>
+      <div className="more-section">
+        <h2>More Locations</h2>
+        <div style={{display: 'grid', alignItems: 'center', gap: '8px', gridTemplateColumns: 'auto auto auto'}}>
+          {similarLocations && similarLocations.length > 0 ? (
+              similarLocations.map((similarLocation) => {
+                if(!similarLocation)
+                  return;
+                return <div key={similarLocation.hotel_id} style={{display: "inline"}} className="similar-location-item">
+                  <button onClick={() => {
+                    setLocation(similarLocation);
+                    setActiveSection("Overview");
+                  }} style={{borderRadius:'16px', width: '80px', height: '80px'}}>
+                    <img src={similarLocation.photo} style={{width: '100%', height: '100%', borderRadius: '16px'}}/>
+                  </button>
+                </div>;
+              })
+          ) : (
+              <p>No similar locations available.</p>
+          )}
+        </div>
+      </div>
   );
+
 
   const renderContent = () => {
     switch (activeSection) {
@@ -240,7 +286,7 @@ const PageDetails = ({ location, reviews, setReviews }) => {
         <>
           <div style={{ position: "relative" }}>
             <img
-              src={location.photo}
+              src={location.photo ?? ""}
               alt={`Imagine pentru ${location.name}`}
               style={{ width: "100%", height: "256px" }}
             />
