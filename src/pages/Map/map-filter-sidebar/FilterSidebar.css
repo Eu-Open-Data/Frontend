@@ -28,7 +28,7 @@ h2 {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .dropdown-container > div,
@@ -104,13 +104,13 @@ h2 {
 }
 
 .toggle-container input[type="checkbox"] {
-  margin-right: 10px; /* Space between checkbox and label text */
-  appearance: none; /* Remove default checkbox styling */
-  width: 16px; /* Set checkbox width */
-  height: 16px; /* Set checkbox height */
-  border-radius: 50%; /* Set border-radius for round checkbox */
-  background-color: #fff; /* White background for checkbox */
-  border: 1px solid #0281c8; /* Blue border for checkbox */
+  margin-right: 10px;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #0281c8;
   transition: background-color 0.3s ease;
 }
 
@@ -169,4 +169,8 @@ h2 {
   100% {
     transform: rotate(360deg);
   }
+}
+.number-input {
+  font-size: 1rem;
+  text-indent: 1rem;
 }
