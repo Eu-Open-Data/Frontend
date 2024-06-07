@@ -54,7 +54,7 @@ export const SidebarData = [
         style={{ width: "24px", height: "24px" }}
       />
     ),
-    link: "/exit",
+    link: "/",
     className: "exit",
   },
 ];
