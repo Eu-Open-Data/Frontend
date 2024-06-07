@@ -1,82 +1,76 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './History.css';
+import '../Map/map-filter-sidebar/LoadingPage.css';
+import axios from "axios";
+import {GoogleMap, LoadScript} from "@react-google-maps/api";
+import {useNavigate} from "react-router-dom";
 
 const History = () => {
-  const [vacations, setVacations] = useState([
-    {
-      city: 'City Name 1',
-      country: 'Country 1', 
-      startDate: 'dd-mm-yyyy',
-      endDate: 'dd-mm-yyyy',
-      imageUrl: 'https://via.placeholder.com/50',
-    },
-    {
-      city: 'City Name 2',
-      country: 'Country 2',
-      startDate: 'dd-mm-yyyy',
-      endDate: 'dd-mm-yyyy',
-      imageUrl: 'https://via.placeholder.com/50',
-    },
-    {
-      city: 'City Name 3',
-      country: 'Country 3',
-      startDate: 'dd-mm-yyyy',
-      endDate: 'dd-mm-yyyy',
-      imageUrl: 'https://via.placeholder.com/50',
-    },
-    {
-      city: 'City Name 4',
-      country: 'Country 4',
-      startDate: 'dd-mm-yyyy',
-      endDate: 'dd-mm-yyyy',
-      imageUrl: 'https://via.placeholder.com/50',
-    },
-  ]);
+  const [vacations, setVacations] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const addVacation = (vacation) => {
-    setVacations((prevVacations) => [...prevVacations, vacation]);
-  };
-
-  useEffect(() => {
-    // Simulez adaugarea dinamica a unor vacante noi 
-    const newVacations = [
-      {
-        city: 'City Name 5',
-        country: 'Country 5',
-        startDate: 'dd-mm-yyyy',
-        endDate: 'dd-mm-yyyy',
-        imageUrl: 'https://via.placeholder.com/50',
-      },
-      {
-        city: 'City Name 6',
-        country: 'Country 6',
-        startDate: 'dd-mm-yyyy',
-        endDate: 'dd-mm-yyyy',
-        imageUrl: 'https://via.placeholder.com/50',
-      },
-      
-    ];
-
-    newVacations.forEach((vacation) => addVacation(vacation));
-  }, []);
+  const navigate = useNavigate();
+  if(!sessionStorage.getItem("token"))
+      navigate('/login');
 
   return (
     <div className="vacation-history-container">
       <h2>Vacation History</h2>
-      <div className="vacation-cards">
-        {vacations.map((vacation, index) => (
-          <div key={index} className="vacation-card">
-            <div className="image-container">
-              <img src={vacation.imageUrl} alt={`${vacation.city} ${vacation.country}`} />
+        <div style={{display: 'none'}}>
+            <LoadScript googleMapsApiKey="AIzaSyAu4d-DWWSviutRrLSdMll2JfoFLGY45MI" libraries={['places']}>
+                <GoogleMap onLoad={map => {
+                    let service = new google.maps.places.PlacesService(map);
+
+                    axios.get(`http://54.167.96.255:5000/get_history?token=${sessionStorage.getItem("token")}`).then(r => {
+                        let promises = [];
+                        r.data.reverse().forEach((x) => {
+
+                            promises.push(new Promise((resolve, reject) => {
+                                service.findPlaceFromQuery({
+                                    query: x.hotel.name + " " + x.hotel.address,
+                                    fields: ['place_id', 'photos'],
+                                }, (results, status) => {
+                                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                        if (!results || !results[0].photos) {
+                                            resolve(null); // Resolve with null if no results or no photos
+                                        } else {
+                                            x.photo = results[0].photos[0].getUrl();
+                                            resolve(x);
+                                        }
+                                    } else {
+                                        reject(`PlacesServiceStatus not OK: ${status}`);
+                                    }
+                                });
+                            }).catch(error => {
+                                console.error(`Error fetching place data for ${x.name}: ${error}`);
+                            }));
+                        });
+
+                        Promise.allSettled(promises).then((results) => {
+                            results = results.map(x => x.value);
+                            setVacations(results);
+                            setLoading(false);
+                        })
+                    });
+                }}>
+                </GoogleMap>
+            </LoadScript>
+        </div>
+        {
+            loading ? <div style={{width: '100%', display: 'flex', alignContent: 'center'}}><div className="loader"></div></div> :       <div className="vacation-cards">
+                {vacations.map((vacation, index) => (
+                    <div key={index} className="vacation-card">
+                        <div className="image-container">
+                            <img src={vacation.photo} />
+                        </div>
+                        <div className="vacation-info">
+                            <div className="city-name">{vacation.hotel.name}</div>
+                            <div className="date-range">{vacation.timestamp}</div>
+                        </div>
+                    </div>
+                ))}
             </div>
-            <div className="vacation-info">
-              <div className="city-name">{vacation.city}</div>
-              <div className="country">{vacation.country}</div>
-              <div className="date-range">{`${vacation.startDate} - ${vacation.endDate}`}</div>
-            </div>
-          </div>
-        ))}
-      </div>
+        }
     </div>
   );
 };

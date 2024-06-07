@@ -7,10 +7,11 @@ import icon3 from "/src/assets/Frame3.png";
 import icon4 from "/src/assets/Frame4.png";
 import icon5 from "/src/assets/Frame5.png";
 import UserIcon from "/src/assets/user_icon.png";
-import { requestPost } from "./DevController.js";
+import {fetchData, requestPost} from "./DevController.js";
 import getData from "./fetch.enum.js";
 import AddReview from "./AddReview.jsx";
 import useToggle from "./useToggle.js";
+import axios from "axios";
 
 const PageDetails = ({ location, reviews, setReviews }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,8 @@ const PageDetails = ({ location, reviews, setReviews }) => {
   const { on, toggler } = useToggle();
 
   useEffect(() => {
+    axios.get(`http://54.167.96.255:5000/location/${location.hotel_id}?token=${sessionStorage.getItem("token")}`)
+        .then(res => console.log(res));
     setTimeout(async () => {
       if (location) {
         setIsLoading(false);
