@@ -1,7 +1,7 @@
 const DEV_BACKEND_IP = "http://54.167.96.255:8081/";
 
 export const requestGet = async (type, data) => {
-  return fetchData(type, data, "GET")
+  return fetchData(type, data, "GET");
 };
 
 export const requestPost = async (type, data) => {
@@ -12,7 +12,7 @@ export const requestPost = async (type, data) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
       body: JSON.stringify(data),
     });
@@ -32,7 +32,6 @@ export const requestPost = async (type, data) => {
 
   return result;
 };
-
 
 export const fetchData = async (type, data, method) => {
   const origin = DEV_BACKEND_IP + type;
@@ -60,7 +59,4 @@ export const fetchData = async (type, data, method) => {
   return response;
 };
 
-
-
-
-export default {requestGet, requestPost, fetchData};
+export default { requestGet, requestPost, fetchData };
