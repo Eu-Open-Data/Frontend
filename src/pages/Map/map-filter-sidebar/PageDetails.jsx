@@ -12,19 +12,20 @@ import getData from "./fetch.enum.js";
 import AddReview from "./AddReview.jsx";
 import useToggle from "./useToggle.js";
 import axios from "axios";
-
+// eslint-disable-next-line no-unused-vars
+import { fetchData } from "./DevController.js";
 /* global google */
 
-const PageDetails = ({ location, reviews, setReviews, map, setLocation }) => {
+const PageDetails = ({ location, map, setLocation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState("Overview");
   const [isFavorite, setIsFavorite] = useState(false);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const [similarLocations, setSimilarLocations] = useState([]);
-
+  const [reviews, setReviews] = useState([]);
   const { on, toggler } = useToggle();
-
+  const [newReview, setNewReview] = useState([]);
   useEffect(() => {
     axios
       .get(
@@ -57,27 +58,22 @@ const PageDetails = ({ location, reviews, setReviews, map, setLocation }) => {
                   }
                 }
               );
-            }).catch((error) => {
-              console.error(
-                `Error fetching place data for ${x.name}: ${error}`
-              );
             })
           );
         });
 
         Promise.allSettled(promises).then((results) => {
           results = results.map((x) => x.value);
-          console.log(results);
+
           setSimilarLocations(results);
         });
       });
-    axios
-      .get(
-        `http://54.167.96.255:5000/location/${
-          location.hotel_id
-        }?token=${sessionStorage.getItem("token")}`
-      )
-      .then((res) => console.log(res));
+    axios.get(
+      `http://54.167.96.255:5000/location/${
+        location.hotel_id
+      }?token=${sessionStorage.getItem("token")}`
+    );
+
     setTimeout(async () => {
       if (location) {
         setIsLoading(false);
@@ -88,26 +84,40 @@ const PageDetails = ({ location, reviews, setReviews, map, setLocation }) => {
     }, 1000);
   }, [location, map]);
 
+  useEffect(() => {
+    if (activeSection === "Reviews") {
+      axios
+        .get(
+          `http://54.167.96.255:8081/location/review/all/${location.hotel_id}`
+        )
+        .then((res) => {
+          setReviews([...res.data]);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [activeSection, location.hotel_id, newReview]);
+
   const addReview = async (content, rating) => {
     let toSendObject = {
+      token: sessionStorage.getItem("token"),
       hotel: {
         id: location.hotel_id,
       },
       reviewComment: content,
       rating: rating,
     };
+
     const response = await requestPost(getData.REVIEW.CREATE, toSendObject);
-    // AICI AR TREBUI SA RETURNAM ID-UL REVIEW-ULUI DAR DAT FIIND FAPTUL CA NU MAI E TIMP .. RAMANE ASA URAT
-    if ("Review added successfully." === response) {
-      let newReview = {
-        author: "Author id: X (nu stim pentru ca nu avem decat JWT)",
-        rating: rating,
-        content: content,
-      };
-      reviews.push(newReview);
-      setReviews(reviews);
-      forceUpdate();
+    await console.log(response);
+    if (response != null) {
+      setNewReview(response);
     }
+    // AICI AR TREBUI SA RETURNAM ID-UL REVIEW-ULUI DAR DAT FIIND FAPTUL CA NU MAI E TIMP .. RAMANE ASA URAT
+
+    //reviews.push(newReview);
+    //setReviews([...reviews, newReview]);
+
+    forceUpdate();
   };
 
   const toggleFavorite = () => {
@@ -190,70 +200,77 @@ const PageDetails = ({ location, reviews, setReviews, map, setLocation }) => {
     </div>
   );
 
-  const renderReviews = () => (
-    <div className="reviews-section">
-      <div className="reviews-header">
-        <h2>Rating</h2>
-        <div className="rating-container">
-          <div className="rating">
-            {Array.from({ length: Math.floor(location.rating) }, (_, index) => (
-              <StarIcon key={index} />
-            ))}
-          </div>
-          <span className="rating-number">
-            {parseFloat(location.rating)?.toFixed(1)}
-          </span>
-          <span className="votes-count">({location.votesCount} voturi)</span>
-        </div>
-      </div>
-      <div>
-        {on && (
-          <AddReview
-            toggler={toggler}
-            publish={(content, rating) => {
-              addReview(content, rating);
-              toggler();
-            }}
-          />
-        )}
-      </div>
-      {!on && (
-        <div className="write-review">
-          <button className="write-review-button" onClick={() => toggler()}>
-            Write a review
-          </button>
-        </div>
-      )}
-      <div className="rating-divider"></div> {/* Aici adaugă linia */}
-      <div className="reviews-list">
-        {reviews && reviews.length > 0 ? (
-          reviews.map((review, index) => (
-            <div key={index} className="review-item">
-              <div className="review-author">
-                <div className="review-icon">
-                  <img src={UserIcon} alt="User icon" className="user-icon" />
-                </div>
-                <div className="review-author-name">
-                  <h3>{review.author}</h3>
-                  <p>{review.content}</p>
-                </div>
-              </div>
-              <div className="review-rating">
-                {Array.from(
-                  { length: Math.floor(review.rating) },
-                  (_, index) => (
-                    <StarIcon key={index} />
-                  )
-                )}
-              </div>
+  const renderReviews = () => {
+    console.log(reviews);
+    return (
+      <div className="reviews-section">
+        <div className="reviews-header">
+          <h2>Rating</h2>
+          <div className="rating-container">
+            <div className="rating">
+              {Array.from(
+                { length: Math.floor(location.rating) },
+                (_, index) => (
+                  <StarIcon key={index} />
+                )
+              )}
             </div>
-          ))
-        ) : (
-          <p>No reviews available.</p>
+            <span className="rating-number">
+              {parseFloat(location.rating)?.toFixed(1)}
+            </span>
+            <span className="votes-count">({location.votesCount} voturi)</span>
+          </div>
+        </div>
+        <div>
+          {on && (
+            <AddReview
+              toggler={toggler}
+              publish={(content, rating) => {
+                addReview(content, rating);
+                toggler();
+              }}
+            />
+          )}
+        </div>
+        {!on && (
+          <div className="write-review">
+            <button className="write-review-button" onClick={() => toggler()}>
+              Write a review
+            </button>
+          </div>
         )}
+        <div className="rating-divider"></div> {/* Aici adaugă linia */}
+        <div className="reviews-list">
+          {reviews && reviews.length > 0 ? (
+            //reviews.filter((review)=>review.rating!=0).
+            reviews.map((review, index) => (
+              <div key={index} className="review-item">
+                <div className="review-author">
+                  <div className="review-icon">
+                    <img src={UserIcon} alt="User icon" className="user-icon" />
+                  </div>
+                  <div className="review-author-name">
+                    <h3>{review.user.username}</h3>
+                    <p>{review.review.reviewComment}</p>
+                  </div>
+                </div>
+                <div className="review-rating">
+                  {Array.from(
+                    { length: Math.floor(review.review.rating) },
+                    (_, index) => (
+                      <StarIcon key={index} />
+                    )
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No reviews available.</p>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderMore = () => (
     <div className="more-section">
